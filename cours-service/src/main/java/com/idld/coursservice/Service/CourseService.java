@@ -10,6 +10,6 @@ public interface CourseService {
     List<CourseResponseDTO> getAllCourses();
     CourseResponseDTO getCourseById(Long id);
     CourseResponseDTO createCourse(CourseRequestDTO courseRequestDTO);
-    CourseResponseDTO updateCourse(Long id, CourseRequestDTO courseRequestDTO);
+    void updateCourse(Long id, CourseRequestDTO courseRequestDTO);
     CourseResponseDTO deleteCourse(Long id);
 }

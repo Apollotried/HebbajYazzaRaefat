@@ -3,8 +3,8 @@ package com.idld.coursservice.Service;
 import com.idld.coursservice.DTO.CourseRequestDTO;
 import com.idld.coursservice.DTO.CourseResponseDTO;
 import com.idld.coursservice.Entity.Course;
+import com.idld.coursservice.Mapper.CourseMapperInter;
 import com.idld.coursservice.Repository.CourseRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +14,11 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
+    private final CourseMapperInter courseMapper;
 
-    public CourseServiceImpl(CourseRepository courseRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, CourseMapperInter courseMapper) {
         this.courseRepository = courseRepository;
+        this.courseMapper = courseMapper;
     }
 
     @Override
@@ -25,56 +27,46 @@ public class CourseServiceImpl implements CourseService {
         List<CourseResponseDTO> courseResponseDTOs = new ArrayList<>();
 
         for (Course course : courses) {
-            CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
-            BeanUtils.copyProperties(course, courseResponseDTO);
-            courseResponseDTOs.add(courseResponseDTO);
+            courseResponseDTOs.add(courseMapper.toCourseDTO(course));
         }
 
         return courseResponseDTOs;
     }
 
-
     @Override
     public CourseResponseDTO getCourseById(Long id) {
         Course course = courseRepository.findById(id).get();
-        CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
-        BeanUtils.copyProperties(course, courseResponseDTO);
-        return courseResponseDTO;
+        return courseMapper.toCourseDTO(course);
     }
-
 
     @Override
     public CourseResponseDTO createCourse(CourseRequestDTO courseRequestDTO) {
-        Course course = new Course();
-        BeanUtils.copyProperties(courseRequestDTO, course);
+        Course course = courseMapper.toCourse(courseRequestDTO);
         Course savedCourse = courseRepository.save(course);
-        CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
-        BeanUtils.copyProperties(savedCourse, courseResponseDTO);
-        return courseResponseDTO;
+        return courseMapper.toCourseDTO(savedCourse);
     }
 
-
     @Override
-    public CourseResponseDTO updateCourse(Long id, CourseRequestDTO courseRequestDTO) {
+    public void updateCourse(Long id, CourseRequestDTO courseRequestDTO) {
+        // Retrieve the existing course from the database
         Course existingCourse = courseRepository.findById(id).get();
-        BeanUtils.copyProperties(courseRequestDTO, existingCourse, "id");
-        Course updatedCourse = courseRepository.save(existingCourse);
-        CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
-        BeanUtils.copyProperties(updatedCourse, courseResponseDTO);
-        return courseResponseDTO;
+
+        // Manually set the values from the DTO to the existing entity
+        existingCourse.setTitle(courseRequestDTO.getTitle());
+        existingCourse.setDescription(courseRequestDTO.getDescription());
+        existingCourse.setCredit(courseRequestDTO.getCredit());
+        existingCourse.setInstructor(courseRequestDTO.getInstructor());
+
+        // Save the updated course entity
+        courseRepository.save(existingCourse);
     }
 
 
     @Override
     public CourseResponseDTO deleteCourse(Long id) {
         Course course = courseRepository.findById(id).get();
-        CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
-        BeanUtils.copyProperties(course, courseResponseDTO);
-
+        CourseResponseDTO courseResponseDTO = courseMapper.toCourseDTO(course);
         courseRepository.delete(course);
         return courseResponseDTO;
     }
-
-
-
 }
