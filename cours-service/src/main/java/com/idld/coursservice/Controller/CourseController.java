@@ -1,7 +1,7 @@
 package com.idld.coursservice.Controller;
 
-
-import com.idld.coursservice.Entity.Course;
+import com.idld.coursservice.DTO.CourseRequestDTO;
+import com.idld.coursservice.DTO.CourseResponseDTO;
 import com.idld.coursservice.Service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,29 +18,27 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<Course> getAllCourses() {
+    public List<CourseResponseDTO> getAllCourses() {
         return courseService.getAllCourses();
     }
 
     @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable Long id) {
+    public CourseResponseDTO getCourseById(@PathVariable Long id) {
         return courseService.getCourseById(id);
     }
 
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
-        return courseService.createCourse(course);
+    public CourseResponseDTO createCourse(@RequestBody CourseRequestDTO courseRequestDTO) {
+        return courseService.createCourse(courseRequestDTO);
     }
 
     @PutMapping("/{id}")
-    public Course updateCourse(@PathVariable Long id, @RequestBody Course course) {
-        return courseService.updateCourse(id, course);
+    public CourseResponseDTO updateCourse(@PathVariable Long id, @RequestBody CourseRequestDTO courseRequestDTO) {
+        return courseService.updateCourse(id, courseRequestDTO);
     }
 
     @DeleteMapping("/{id}")
-    public Course deleteCourse(@PathVariable Long id) {
+    public CourseResponseDTO deleteCourse(@PathVariable Long id) {
         return courseService.deleteCourse(id);
     }
 }
-
-

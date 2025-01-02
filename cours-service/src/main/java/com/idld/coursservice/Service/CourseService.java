@@ -1,13 +1,15 @@
 package com.idld.coursservice.Service;
 
-import com.idld.coursservice.Entity.Course;
+
+import com.idld.coursservice.DTO.CourseRequestDTO;
+import com.idld.coursservice.DTO.CourseResponseDTO;
 
 import java.util.List;
 
 public interface CourseService {
-    List<Course> getAllCourses();
-    Course getCourseById(Long id);
-    Course createCourse(Course course);
-    Course updateCourse(Long id, Course course);
-    Course deleteCourse(Long id);
+    List<CourseResponseDTO> getAllCourses();
+    CourseResponseDTO getCourseById(Long id);
+    CourseResponseDTO createCourse(CourseRequestDTO courseRequestDTO);
+    CourseResponseDTO updateCourse(Long id, CourseRequestDTO courseRequestDTO);
+    CourseResponseDTO deleteCourse(Long id);
 }
