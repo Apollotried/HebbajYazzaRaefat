@@ -1,6 +1,7 @@
 package com.idld.communicationservice.controller;
 
 
+import com.idld.communicationservice.Dto.ResponseNotificationDto;
 import com.idld.communicationservice.Entity.Notification;
 import com.idld.communicationservice.service.NotificationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/notifications")
-public class NotificationController {
+public class NotificationController implements NotificationControllerInterface{
 
     @Autowired
     private NotificationServiceInterface notificationService;
@@ -21,7 +22,6 @@ public class NotificationController {
     public void sendNotification(@RequestBody Notification notification) {
         try {
             String subject = notification.getObject() != null ? notification.getObject() : "Mise à jour importante";
-            // Vérification si un ou plusieurs destinataires
             if (notification.getRecipient().contains(" ")) {
                 notificationService.sendNotifications(notification.getRecipient(), subject, notification.getMessage());
             } else {
@@ -35,7 +35,15 @@ public class NotificationController {
 
     @GetMapping("/all")
     public List<Notification> getAllNotifications() {
+
         return notificationService.getAllNotifications();
     }
+    @GetMapping("/{id}")
+    public ResponseNotificationDto getNotificationById(@PathVariable Long id) {
+        ResponseNotificationDto notification = notificationService.getNotificationById(id);
+        if (notification == null) {
+            return null;
+        }
+        return notification;
+    }
 }
-
