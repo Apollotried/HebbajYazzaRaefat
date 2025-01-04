@@ -28,7 +28,7 @@ public class EmailServiceImp implements EmailServiceInterface {
     public void sendEmailWithAttachment(String to, String subject, String message, String filePath) throws MessagingException {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        helper.setFrom("sifeddine.hebbaj12@gmail.com");
+        helper.setFrom("your_email@gmail.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(message);
