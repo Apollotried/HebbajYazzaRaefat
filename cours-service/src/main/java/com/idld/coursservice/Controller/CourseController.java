@@ -3,6 +3,7 @@ package com.idld.coursservice.Controller;
 import com.idld.coursservice.DTO.CourseRequestDTO;
 import com.idld.coursservice.DTO.CourseResponseDTO;
 import com.idld.coursservice.Service.CourseService;
+import com.idld.coursservice.modele.Student;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +13,11 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
+    private final StudentOpenFeign studentOpenFeign;
 
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, StudentOpenFeign studentOpenFeign) {
         this.courseService = courseService;
+        this.studentOpenFeign = studentOpenFeign;
     }
 
     @GetMapping
@@ -34,7 +37,6 @@ public class CourseController {
 
     @PutMapping("/{id}")
     public void updateCourse(@PathVariable Long id, @RequestBody CourseRequestDTO courseRequestDTO) {
-
         courseService.updateCourse(id, courseRequestDTO);
     }
 
@@ -42,4 +44,7 @@ public class CourseController {
     public CourseResponseDTO deleteCourse(@PathVariable Long id) {
         return courseService.deleteCourse(id);
     }
+
+
+
 }

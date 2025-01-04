@@ -1,9 +1,7 @@
 package com.idld.coursservice.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.idld.coursservice.modele.Student;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -25,8 +23,12 @@ public class Course {
     private String description;
 
     private int credit;
-
     private String instructor;
+
+
+    private Long idStudent;
+    @Transient
+    Student student;
 
 }
 

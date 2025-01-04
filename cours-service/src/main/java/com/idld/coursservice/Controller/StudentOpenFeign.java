@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @FeignClient(name = "etudiant-service", url = "http://localhost:8080/api")
-public interface StudentFeignClient {
+public interface StudentOpenFeign {
 
     @GetMapping("/students")
     List<Student> getAllStudents();
