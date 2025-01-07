@@ -1,12 +1,14 @@
-package com.idld.coursservice.DTO;
-
+package com.idld.resultatservice.Dtos;
 
 import lombok.*;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CourseResponseDTO {
+@Builder
+@ToString
+@Getter
+@Setter
+public class CourseDto {
     private Long id;
     private String title;
     private String description;

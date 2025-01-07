@@ -1,13 +1,35 @@
 package com.idld.resultatservice;
 
+import com.idld.resultatservice.entities.Result;
+import com.idld.resultatservice.repository.ResultRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 
+@EnableFeignClients
 @SpringBootApplication
 public class ResultatServiceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ResultatServiceApplication.class, args);
+    }
+
+    @Bean
+    CommandLineRunner start(ResultRepository Repository)
+    {
+        return args-> {
+            Result r1 = Result.builder()
+                    .studentId(1)
+                    .courseId(1)
+                    .grade(10)
+                    .semester(1)
+                    .build() ;
+
+            Repository.save(r1) ;
+
+        } ;
     }
 
 }
