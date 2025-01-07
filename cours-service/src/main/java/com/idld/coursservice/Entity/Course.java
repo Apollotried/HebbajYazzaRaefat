@@ -1,6 +1,7 @@
 package com.idld.coursservice.Entity;
 
-import com.idld.coursservice.modele.Student;
+import com.idld.coursservice.DTO.TeacherDtoResponse;
+import com.idld.coursservice.modele.Teacher;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -24,12 +25,12 @@ public class Course {
     private String description;
 
     private int credit;
-    private String instructor;
 
+    private long TeacherId;
 
-    private Long idStudent;
     @Transient
-    Student student;
+    private Teacher teacher;
+
 
 }
 

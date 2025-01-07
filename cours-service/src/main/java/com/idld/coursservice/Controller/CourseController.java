@@ -3,7 +3,6 @@ package com.idld.coursservice.Controller;
 import com.idld.coursservice.DTO.CourseRequestDTO;
 import com.idld.coursservice.DTO.CourseResponseDTO;
 import com.idld.coursservice.Service.CourseService;
-import com.idld.coursservice.modele.Student;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,17 +12,23 @@ import java.util.List;
 public class CourseController {
 
     private final CourseService courseService;
-    private final StudentOpenFeign studentOpenFeign;
 
-    public CourseController(CourseService courseService, StudentOpenFeign studentOpenFeign) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
-        this.studentOpenFeign = studentOpenFeign;
     }
+
+    @GetMapping("/{courseId}/details")
+    public CourseResponseDTO getCourseDetails(@PathVariable long courseId) {
+        return courseService.getCourseDetails(courseId);
+    }
+
 
     @GetMapping
     public List<CourseResponseDTO> getAllCourses() {
         return courseService.getAllCourses();
     }
+
+
 
     @GetMapping("/{id}")
     public CourseResponseDTO getCourseById(@PathVariable Long id) {

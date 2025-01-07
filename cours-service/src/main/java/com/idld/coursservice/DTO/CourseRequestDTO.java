@@ -11,6 +11,6 @@ public class CourseRequestDTO {
     private String title;
     private String description;
     private int credit;
-    private String instructor;
+    private long TeacherId;
 }
 

@@ -9,10 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="cours-service" />
         <module name="resultat-service" />
-        <module name="inscription-service" />
-        <module name="discovery-service" />
+        <module name="prof-service" />
         <module name="gateway-service" />
         <module name="communication-service" />
+        <module name="inscription-service" />
+        <module name="discovery-service" />
       </profile>
       <profile name="Annotation profile for etudiant-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -36,6 +37,7 @@
       <module name="etudiant-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="inscription-service" options="-parameters" />
+      <module name="prof-service" options="-parameters" />
       <module name="resultat-service" options="-parameters" />
       <module name="testModule" options="-parameters" />
     </option>

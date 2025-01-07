@@ -1,7 +1,9 @@
 package com.idld.coursservice.Service;
 
+import com.idld.coursservice.Controller.TeacherClient;
 import com.idld.coursservice.DTO.CourseRequestDTO;
 import com.idld.coursservice.DTO.CourseResponseDTO;
+import com.idld.coursservice.DTO.TeacherDtoResponse;
 import com.idld.coursservice.Entity.Course;
 import com.idld.coursservice.Mapper.CourseMapperInter;
 import com.idld.coursservice.Repository.CourseRepository;
@@ -15,10 +17,12 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseMapperInter courseMapper;
+    private final TeacherClient teacherClient;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CourseMapperInter courseMapper) {
+    public CourseServiceImpl(CourseRepository courseRepository, CourseMapperInter courseMapper, TeacherClient teacherClient) {
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
+        this.teacherClient = teacherClient;
     }
 
     @Override
@@ -55,7 +59,7 @@ public class CourseServiceImpl implements CourseService {
         existingCourse.setTitle(courseRequestDTO.getTitle());
         existingCourse.setDescription(courseRequestDTO.getDescription());
         existingCourse.setCredit(courseRequestDTO.getCredit());
-        existingCourse.setInstructor(courseRequestDTO.getInstructor());
+        existingCourse.setTeacherId(courseRequestDTO.getTeacherId());
 
         // Save the updated course entity
         courseRepository.save(existingCourse);
@@ -68,5 +72,17 @@ public class CourseServiceImpl implements CourseService {
         CourseResponseDTO courseResponseDTO = courseMapper.toCourseDTO(course);
         courseRepository.delete(course);
         return courseResponseDTO;
+    }
+
+    @Override
+    public CourseResponseDTO getCourseDetails(long courseId) {
+        // Fetch course details from your repository or service
+        CourseResponseDTO course = getCourseById(courseId);
+
+        // Use Feign client to get teacher details
+        TeacherDtoResponse teacher = teacherClient.getTeacherById(course.getTeacherId());
+        course.setTeacher(teacher);
+
+        return course;
     }
 }

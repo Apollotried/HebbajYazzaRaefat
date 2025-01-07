@@ -1,6 +1,7 @@
-package com.idld.coursservice.modele;
+package com.idld.profservice.model;
 
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,10 +13,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Student {
+@Entity
+public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
     private String firstName;
     private String lastName;
     private String email;

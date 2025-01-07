@@ -2,7 +2,6 @@ package com.idld.coursservice;
 
 import com.idld.coursservice.Entity.Course;
 import com.idld.coursservice.Repository.CourseRepository;
-import com.idld.coursservice.modele.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +24,7 @@ public class CoursServiceApplication {
                     .credit(12)
                     .description("ezeze")
                     .title("cours1")
+                    .TeacherId(1)
                     .build() ;
 
             courseRepository.save(c1);
