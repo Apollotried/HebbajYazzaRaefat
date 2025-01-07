@@ -10,6 +10,8 @@
         <module name="cours-service" />
         <module name="resultat-service" />
         <module name="inscription-service" />
+        <module name="discovery-service" />
+        <module name="gateway-service" />
         <module name="communication-service" />
       </profile>
       <profile name="Annotation profile for etudiant-service" enabled="true">
@@ -30,7 +32,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="communication-service" options="-parameters" />
       <module name="cours-service" options="-parameters" />
+      <module name="discovery-service" options="-parameters" />
       <module name="etudiant-service" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
       <module name="inscription-service" options="-parameters" />
       <module name="resultat-service" options="-parameters" />
       <module name="testModule" options="-parameters" />
