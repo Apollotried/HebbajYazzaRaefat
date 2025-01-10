@@ -11,18 +11,19 @@
         <module name="resultat-service" />
         <module name="prof-service" />
         <module name="gateway-service" />
-        <module name="communication-service" />
-        <module name="inscription-service" />
         <module name="discovery-service" />
+        <module name="communication-service" />
       </profile>
-      <profile name="Annotation profile for etudiant-service" enabled="true">
+      <profile name="Annotation profile for config-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
+        <module name="inscription-service" />
         <module name="etudiant-service" />
+        <module name="config-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -32,6 +33,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="communication-service" options="-parameters" />
+      <module name="config-service" options="-parameters" />
       <module name="cours-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="etudiant-service" options="-parameters" />
