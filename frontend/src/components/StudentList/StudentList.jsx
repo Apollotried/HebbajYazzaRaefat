@@ -1,13 +1,22 @@
-import React from 'react';
-
+import React, { useEffect, useState } from "react";
+import { fetchStudents } from "../../api/studentApi";
 
 const StudentList = () => {
-    // Static data for now
-    const students = [
-        { id: 1, nom: 'Dupont', prenom: 'Jean', nom_cours: 'Cours A' },
-        { id: 2, nom: 'Martin', prenom: 'Marie', nom_cours: 'Cours B' },
-        { id: 3, nom: 'Durand', prenom: 'Luc', nom_cours: 'Cours C' },
-    ];
+    const [students, setStudents] = useState([]);
+
+    useEffect(() => {
+        const getStudents = async () => {
+            try {
+                const fetchedStudents = await fetchStudents();
+                setStudents(fetchedStudents);
+                console.log("Fetched Students:", fetchedStudents);
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            }
+        };
+
+        getStudents();
+    }, []);
 
     return (
         <div className="listeEtud">
@@ -27,21 +36,20 @@ const StudentList = () => {
                     <th>Code</th>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th>Cours</th>
+                    <th>Email</th>
                 </tr>
                 </thead>
                 <tbody>
                 {students.map(student => (
                     <tr key={student.id}>
                         <td>{student.id}</td>
-                        <td>{student.nom}</td>
-                        <td>{student.prenom}</td>
-                        <td>{student.nom_cours}</td>
+                        <td>{student.firstName}</td>
+                        <td>{student.lastName}</td>
+                        <td>{student.email}</td>
                     </tr>
                 ))}
                 </tbody>
             </table>
-
         </div>
     );
 };

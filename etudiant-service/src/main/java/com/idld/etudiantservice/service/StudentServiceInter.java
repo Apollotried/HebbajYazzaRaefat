@@ -12,5 +12,6 @@ public interface StudentServiceInter {
     public void addStudent(StudentDtoRequest student);
     public void updateStudent(long id, StudentDtoRequest student);
     public void deleteStudent(long id);
+    public long getTotalStudentsCount();
 
 }

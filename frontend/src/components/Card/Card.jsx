@@ -1,10 +1,11 @@
+// Card.js
 import React from 'react';
 
-const Card = () => (
+const Card = ({ count, label, description }) => (
     <div className="card">
-        <h1>3</h1>
-        <h3>Etudiants</h3>
-        <p>Nombre d'etudiants</p>
+        <h1>{count}</h1>
+        <h3>{label}</h3>
+        <p>{description}</p>
     </div>
 );
 

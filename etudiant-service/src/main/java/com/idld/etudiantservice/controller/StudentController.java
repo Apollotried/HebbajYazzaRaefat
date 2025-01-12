@@ -23,6 +23,14 @@ public class StudentController {
     public List<StudentDtoResponse> getStudents() {
         return studentServiceInter.getAllStudents();
     }
+
+    @GetMapping("/students/count")
+    public long getStudentsCount() {
+        return studentServiceInter.getTotalStudentsCount();
+    }
+
+
+
     @GetMapping("/students/{id}")
     public StudentDtoResponse getStudentById(@PathVariable long id) {
         return studentServiceInter.getStudentById(id);
@@ -47,6 +55,8 @@ public class StudentController {
     public String test() {
         return "Controller is working!";
     }
+
+
 
 
 }

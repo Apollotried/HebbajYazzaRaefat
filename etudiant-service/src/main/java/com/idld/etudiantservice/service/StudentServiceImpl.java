@@ -34,6 +34,11 @@ public class StudentServiceImpl implements StudentServiceInter{
     }
 
     @Override
+    public long getTotalStudentsCount(){
+        return studentRepository.count();
+    }
+
+    @Override
     public StudentDtoResponse getStudentById(long id) {
         Student student = studentRepository.findById(id).orElse(null);
         return studentMapperInter.ToStudentDto(student);

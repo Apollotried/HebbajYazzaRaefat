@@ -15,19 +15,4 @@ public class CoursServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoursServiceApplication.class, args);
     }
-
-    @Bean
-    CommandLineRunner start(CourseRepository courseRepository)
-    {
-        return args-> {
-            Course c1 = Course.builder()
-                    .credit(12)
-                    .description("ezeze")
-                    .title("cours1")
-                    .TeacherId(1)
-                    .build() ;
-
-            courseRepository.save(c1);
-        } ;
-    }
 }
