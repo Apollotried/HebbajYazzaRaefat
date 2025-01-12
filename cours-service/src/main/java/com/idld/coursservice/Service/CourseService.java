@@ -13,4 +13,5 @@ public interface CourseService {
     void updateCourse(Long id, CourseRequestDTO courseRequestDTO);
     CourseResponseDTO deleteCourse(Long id);
     public CourseResponseDTO getCourseDetails(long courseId);
+    public long getTotalCoursesCount();
 }

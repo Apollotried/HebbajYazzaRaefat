@@ -85,4 +85,9 @@ public class CourseServiceImpl implements CourseService {
 
         return course;
     }
+
+    @Override
+    public long getTotalCoursesCount(){
+        return courseRepository.count();
+    }
 }

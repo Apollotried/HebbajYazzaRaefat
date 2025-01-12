@@ -4,9 +4,11 @@ import './Main.css';
 import Card from "../Card/Card.jsx";
 import StudentList from "../StudentList/StudentList.jsx";
 import { fetchStudentCount } from '../../api/studentApi';
+import { fetchCourseCount} from "../../api/coursApi.js";
 
 const Main = () => {
-    const [studentCount, setStudentCount] = useState(null); // State to hold student count
+    const [studentCount, setStudentCount] = useState(null);
+    const [courseCount, setCourseCount] = useState(null);
 
     useEffect(() => {
         const getStudentCount = async () => {
@@ -18,7 +20,17 @@ const Main = () => {
             }
         };
 
+        const getCourseCount = async () => {
+            try {
+                const count = await fetchCourseCount();
+                setCourseCount(count);
+            } catch (error) {
+                console.error("Error fetching student count:", error);
+            }
+        };
+
         getStudentCount();
+        getCourseCount();
     }, []); // Empty dependency array to run only once on mount
 
     return (
@@ -38,6 +50,11 @@ const Main = () => {
                     count={studentCount}
                     label="Etudiants"
                     description="Nombre d'étudiants"
+                />
+                <Card
+                    count={courseCount}
+                    label="Cours"
+                    description="Nombre des cours"
                 />
             </div>
 

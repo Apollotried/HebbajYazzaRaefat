@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseRequestDTO {
-    private Long id;
     private String title;
     private String description;
     private int credit;

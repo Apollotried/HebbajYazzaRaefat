@@ -1,12 +1,12 @@
 import axiosInstance from "./axiosInstance";
 
 export const fetchStudents = async () => {
-    const response = await axiosInstance.get("/students");
+    const response = await axiosInstance.get("/ETUDIANT-SERVICE/api/students");
     return response.data;
 };
 
 export const fetchStudentCount = async () => {
-    const response = await axiosInstance.get("/students/count");
+    const response = await axiosInstance.get("/ETUDIANT-SERVICE/api/students/count");
     return response.data;
 }
 

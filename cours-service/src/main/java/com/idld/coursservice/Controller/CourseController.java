@@ -22,6 +22,11 @@ public class CourseController {
         return courseService.getCourseDetails(courseId);
     }
 
+    @GetMapping("/count")
+    public long getCoursesCount(){
+        return courseService.getTotalCoursesCount();
+    }
+
 
     @GetMapping
     public List<CourseResponseDTO> getAllCourses() {
