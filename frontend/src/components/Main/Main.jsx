@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import './Main.css';
 import Card from "../Card/Card.jsx";
-import StudentList from "../StudentList/StudentList.jsx";
 import { fetchStudentCount } from '../../api/studentApi';
 import { fetchCourseCount} from "../../api/coursApi.js";
 import {fetchTeachersCount} from "../../api/teacherApi.js";
@@ -75,7 +74,19 @@ const Main = () => {
 
             </div>
 
-            <StudentList />
+            <div className="welcome-container">
+                <div className="welcome-header">Bienvenue sur notre système de gestion scolaire !</div>
+                <div className="welcome-message"> Nous sommes ravis de vous accueillir. Notre système est conçu pour
+                    vous aider à gérer efficacement les informations sur les étudiants, les enseignants et les cours.
+                    Explorez les différentes fonctionnalités en utilisant les liens ci-dessous :
+                </div>
+                <div className="link-cards"><a href="/students" className="link-card">Gérer les étudiants</a> <a
+                    href="/teachers" className="link-card">Gérer les enseignants</a> <a href="/courses"
+                                                                                        className="link-card">Gérer les
+                    cours</a> <a href="/events" className="link-card">Voir les événements</a> <a href="/announcements"
+                                                                                                 className="link-card">Annonces</a>
+                    <a href="/reports" className="link-card">Voir les rapports</a></div>
+            </div>
         </main>
     );
 };
