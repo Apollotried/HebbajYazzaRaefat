@@ -12,4 +12,5 @@ public interface TeacherServiceInter {
     public void addTeacher(TeacherDtoRequest teacherDtoRequest);
     public void updateTeacher(long id, TeacherDtoRequest teacherDtoRequest);
     public void deleteTeacher(long id);
+    public long getTotalTeachersCount();
 }

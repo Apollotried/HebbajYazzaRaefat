@@ -46,4 +46,10 @@ public class TeacherController {
     public String test() {
         return "Controller is working!";
     }
+
+
+    @GetMapping("/teachers/count")
+    public long getTeachersCount(){
+        return teacherServiceInter.getTotalTeachersCount();
+    }
 }

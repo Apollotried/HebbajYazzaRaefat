@@ -14,35 +14,4 @@ public class ProfServiceApplication {
         SpringApplication.run(ProfServiceApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner start(TeacherRepository Repository)
-    {
-        return args-> {
-            Teacher t1 = Teacher.builder()
-                    .address("zezezeze")
-                    .email("aze@gmail.com")
-                    .phone("0623232323")
-                    .firstName("PRO1")
-                    .lastName("GaAAE")
-                    .build() ;
-
-            Repository.save(t1) ;
-
-
-            Teacher t2 = Teacher.builder()
-                    .address("zezezeze")
-                    .email("aze@gmail.com")
-                    .phone("0623232323")
-                    .firstName("PRO2")
-                    .lastName("uio")
-                    .build() ;
-
-            Repository.save(t1) ;
-
-
-
-
-        } ;
-    }
-
 }

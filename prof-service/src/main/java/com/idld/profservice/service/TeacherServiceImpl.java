@@ -62,4 +62,9 @@ public class TeacherServiceImpl implements TeacherServiceInter {
         }
         teacherRepository.deleteById(id);
     }
+
+    @Override
+    public long getTotalTeachersCount(){
+        return teacherRepository.count();
+    }
 }

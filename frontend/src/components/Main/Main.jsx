@@ -5,10 +5,12 @@ import Card from "../Card/Card.jsx";
 import StudentList from "../StudentList/StudentList.jsx";
 import { fetchStudentCount } from '../../api/studentApi';
 import { fetchCourseCount} from "../../api/coursApi.js";
+import {fetchTeachersCount} from "../../api/teacherApi.js";
 
 const Main = () => {
     const [studentCount, setStudentCount] = useState(null);
     const [courseCount, setCourseCount] = useState(null);
+    const [teacherCount, setTeacherCount] = useState(null);
 
     useEffect(() => {
         const getStudentCount = async () => {
@@ -28,9 +30,18 @@ const Main = () => {
                 console.error("Error fetching student count:", error);
             }
         };
+        const getTeacherCount = async () => {
+            try {
+                const count = await fetchTeachersCount();
+                setTeacherCount(count);
+            } catch (error) {
+                console.error("Error fetching student count:", error);
+            }
+        };
 
         getStudentCount();
         getCourseCount();
+        getTeacherCount();
     }, []); // Empty dependency array to run only once on mount
 
     return (
@@ -56,6 +67,12 @@ const Main = () => {
                     label="Cours"
                     description="Nombre des cours"
                 />
+                <Card
+                    count={teacherCount}
+                    label="enseignant"
+                    description="Nombre des profs"
+                />
+
             </div>
 
             <StudentList />
