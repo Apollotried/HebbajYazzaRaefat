@@ -66,3 +66,127 @@ table tbody tr:hover {
 .next:hover {
     background-color: #0056b3;
 }
+
+
+/* Modal styles */
+.Modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 1000;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+}
+
+.Modal h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #2c3e50;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+}
+
+.Modal p {
+    font-size: 18px;
+    color: #34495e;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.Modal button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+.Modal button:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+.Modal img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 50%;
+    margin: 20px 0;
+}
+
+Modal ul {
+    list-style-type: none;
+    padding: 0;
+}
+.Modal li {
+    font-size: 16px;
+    color: #34495e;
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.Modal li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.Modal h3:hover {
+    color: #2980b9;
+}
+
+
+.containerFlex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.ajouter {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #27ae60; /* Different background color to make it stand out */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.ajouter:hover {
+    background-color: #229954; /* Slightly darker shade on hover */
+    transform: scale(1.05);
+}
+
+.ajouter:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(39, 174, 96, 0.5); /* Green shadow for focus */
+}

@@ -10,6 +10,13 @@ export const fetchStudentCount = async () => {
     return response.data;
 }
 
+
+export const fetchStudentById = async (id) => {
+    const response = await axiosInstance.get(`/ETUDIANT-SERVICE/api/students/${id}`);
+
+    return response.data;
+}
+
 export const addStudent = async (student) => {
     const response = await axiosInstance.post("/students", student);
     return response.data;
