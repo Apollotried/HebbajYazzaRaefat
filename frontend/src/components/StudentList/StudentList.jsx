@@ -3,6 +3,7 @@ import { fetchStudents } from "../../api/studentApi";
 import {fetchStudentById} from "../../api/studentApi";
 import './StudentList.css';
 import Modal from 'react-modal';
+import AddStudentModal from "../../addStudentModal.jsx";
 
 
 const StudentList = () => {
@@ -10,6 +11,21 @@ const StudentList = () => {
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [coursesOpen, setCoursesOpen] = useState(false);
+    const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
+
+    const initialDataForm = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        dateOfBirth: '',
+        address: '',
+        phoneNumber: '',
+        gender: ''
+    };
+    const [formData, setFormData] = useState(initialDataForm);
+
+
+
 
     // Example courses data
      const exampleCourses = [
@@ -45,6 +61,36 @@ const StudentList = () => {
         setModalIsOpen(false);
         setSelectedStudent(null);
     }
+
+    const openAddStudentModal = ()=>{
+        setIsAddStudentModalOpen(true);
+    }
+
+    const closeAddStudentModal = ()=>{
+        resetForm();
+        setIsAddStudentModalOpen(false);
+    };
+
+    const resetForm = ()=>{
+        setFormData(initialDataForm);
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle form submission
+        console.log(formData);
+        closeAddStudentModal();
+    };
+
+
     return (
         <main>
             <h1>Gestion Des Ecoles 2024/2025</h1>
@@ -59,7 +105,7 @@ const StudentList = () => {
             <div className="listeEtud">
                 <div className="containerFlex">
                     <h2>Liste des Étudiants</h2>
-                    <button className="ajouter">Ajouter un nouveau etudiant</button>
+                    <button className="ajouter" onClick={openAddStudentModal}>Ajouter un nouveau etudiant</button>
                 </div>
 
                 <form action="" method="GET" className="searchBar">
@@ -100,17 +146,30 @@ const StudentList = () => {
                         className="Modal"
                         overlayClassName="Overlay"
                     >
-                        <h2>Détails de l'étudiant</h2>
-                        <p><strong>Id:</strong> {selectedStudent.id}</p>
-                        <p><strong>Nom:</strong> {selectedStudent.firstName} {selectedStudent.lastName}</p>
-                        <p><strong>Email:</strong> {selectedStudent.email}</p>
-                        <p><strong>Phone:</strong> {selectedStudent.phone}</p>
-                        <p><strong>Address:</strong> {selectedStudent.address}</p>
-                        <p><strong>Genre:</strong> {selectedStudent.gender}</p>
-                        <p><strong>Date de Naissance:</strong> {selectedStudent.gender}</p>
-                        <h3 onClick={() => setCoursesOpen(!coursesOpen)} style={{cursor: 'pointer'}}>
-                            Cours Inscrits {coursesOpen ? '-' : '+'}
-                        </h3>
+                        <div className="x_container">
+                            <h2>Détails de l'étudiant</h2>
+                            <button className="fermer" onClick={closeModal}>x</button>
+                        </div>
+                        <div className="info-grid">
+                            <p><strong>Id:</strong> {selectedStudent.id}</p>
+                            <p><strong>Nom:</strong> {selectedStudent.firstName} {selectedStudent.lastName}</p>
+                            <p><strong>Email:</strong> {selectedStudent.email}</p>
+                            <p><strong>Phone:</strong> {selectedStudent.phone}</p>
+                            <p><strong>Address:</strong> {selectedStudent.address}</p>
+                            <p><strong>Genre:</strong> {selectedStudent.gender}</p>
+                            <p><strong>Date de Naissance:</strong> {selectedStudent.dateOfBirth}</p>
+                        </div>
+
+
+                        <div className="bottom">
+                            <h3 onClick={() => setCoursesOpen(!coursesOpen)} style={{cursor: 'pointer'}}>
+                                Cours Inscrits {coursesOpen ? '-' : '+'}
+                            </h3>
+                            <div className="button-container">
+                                <button className="supprimer">Supprimer</button>
+                                <button className="modifier">Modifier</button>
+                            </div>
+                        </div>
                         {coursesOpen && (
                             <ul>
                                 {exampleCourses.map(course => (
@@ -119,10 +178,16 @@ const StudentList = () => {
                             </ul>
                         )}
 
-
-                        <button onClick={closeModal}>Fermer</button>
                     </Modal>
                 )}
+
+                <AddStudentModal
+                    isOpen={isAddStudentModalOpen}
+                    onRequestClose={closeAddStudentModal}
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                />
 
             </div>
 
