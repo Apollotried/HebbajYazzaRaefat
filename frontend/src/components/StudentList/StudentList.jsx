@@ -124,6 +124,7 @@ const StudentList = () => {
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -133,6 +134,7 @@ const StudentList = () => {
                             <td>{student.firstName}</td>
                             <td>{student.lastName}</td>
                             <td>{student.email}</td>
+                            <td><button className="course-button">Affecter des cours</button></td>
                         </tr>
                     ))}
                     </tbody>
@@ -162,7 +164,7 @@ const StudentList = () => {
 
 
                         <div className="bottom">
-                            <h3 onClick={() => setCoursesOpen(!coursesOpen)} style={{cursor: 'pointer'}}>
+                        <h3 onClick={() => setCoursesOpen(!coursesOpen)} style={{cursor: 'pointer'}}>
                                 Cours Inscrits {coursesOpen ? '-' : '+'}
                             </h3>
                             <div className="button-container">

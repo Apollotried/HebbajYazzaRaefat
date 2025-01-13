@@ -354,4 +354,21 @@ Modal ul {
 }
 
 
+.course-button {
+    background-color: #27ae60; /* Green for action */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.course-button:hover {
+    background-color: #229954;
+    transform: scale(1.05);
+}
+
+
 

@@ -9,7 +9,7 @@ const AddStudentModal = ({ isOpen, onRequestClose, formData, handleChange, handl
             onRequestClose={onRequestClose}
             contentLabel="Ajouter un nouveau etudiant"
             className="ModalAdd"
-            overlayClassName="OverlayAdd"
+            overlayClassName="Overlay"
         >
             <h2>Ajouter un nouveau etudiant</h2>
             <form onSubmit={handleSubmit}>
