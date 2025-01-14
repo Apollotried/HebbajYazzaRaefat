@@ -7,6 +7,7 @@ import AddStudentModal from "../../addStudentModal.jsx";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import CourseAssignmentModal from "../../CourseAssignmentModal.jsx";
+import Pagination from "../pagination/pagination.jsx";
 
 const StudentList = () => {
     const navigate = useNavigate();
@@ -18,6 +19,10 @@ const StudentList = () => {
     const [coursesOpen, setCoursesOpen] = useState(false);
     const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
     const [studentCourses, setStudentCourses] = useState([]);
+    const [search, setSearch] = useState("");
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const studentsPerPage = 5;
 
     const initialDataForm = {
         firstName: '',
@@ -62,7 +67,6 @@ const StudentList = () => {
 
         setModalIsOpen(true);
     };
-
 
     const closeModal = () => {
         setModalIsOpen(false);
@@ -138,6 +142,18 @@ const StudentList = () => {
         setSelectedStudentId(null);
     };
 
+    // Filter and Pagination logic
+    const filteredStudents = students.filter(
+        item => item.firstName.toLowerCase().includes(search.toLowerCase()) ||
+            item.lastName.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const indexOfLastStudent = currentPage * studentsPerPage;
+    const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
+    const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+
+    const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
+
     return (
         <main>
             <h1>Gestion Des Ecoles 2024/2025</h1>
@@ -159,10 +175,10 @@ const StudentList = () => {
                     <input
                         type="text"
                         id="search"
-                        placeholder="Rechercher par nom, prénom ou code..."
+                        placeholder="Rechercher par nom ou prénom"
                         name="search"
+                        onChange={(e) => setSearch(e.target.value)}
                     />
-                    <button type="submit">Chercher</button>
                 </form>
                 <table>
                     <thead>
@@ -174,7 +190,7 @@ const StudentList = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {students.map(student => (
+                    {currentStudents.map(student => (
                         <tr key={student.id}>
                             <td onClick={() => handleRowClick(student.id)} style={{ cursor: 'pointer' }}>{student.id}</td>
                             <td onClick={() => handleRowClick(student.id)} style={{ cursor: 'pointer' }}>{student.firstName}</td>
@@ -187,6 +203,12 @@ const StudentList = () => {
                     ))}
                     </tbody>
                 </table>
+
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
 
                 {selectedStudent && (
                     <Modal
@@ -246,5 +268,6 @@ const StudentList = () => {
         </main>
     );
 };
+
 
 export default StudentList;
