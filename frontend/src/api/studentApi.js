@@ -18,6 +18,18 @@ export const fetchStudentById = async (id) => {
 }
 
 export const addStudent = async (student) => {
-    const response = await axiosInstance.post("/students", student);
+    const response = await axiosInstance.post("/ETUDIANT-SERVICE/api/students", student);
+    return response.data;
+};
+
+
+export const deleteStudent = async (id) => {
+    const response = await axiosInstance.delete(`/ETUDIANT-SERVICE/api/students/${id}`);
+    return response.data;
+};
+
+
+export const updateStudent = async (id, student) => {
+    const response = await axiosInstance.put(`/ETUDIANT-SERVICE/api/students/${id}`, student);
     return response.data;
 };

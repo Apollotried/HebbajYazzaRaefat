@@ -1,37 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { fetchStudents } from "../../api/studentApi";
-import {fetchStudentById} from "../../api/studentApi";
+import { deleteStudent, fetchStudents, fetchStudentById, addStudent } from "../../api/studentApi";
+import { getCoursesByStudentId } from "../../api/inscription.js";
 import './StudentList.css';
 import Modal from 'react-modal';
 import AddStudentModal from "../../addStudentModal.jsx";
-
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import CourseAssignmentModal from "../../CourseAssignmentModal.jsx";
 
 const StudentList = () => {
+    const navigate = useNavigate();
     const [students, setStudents] = useState([]);
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [selectedStudentId, setSelectedStudentId] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modal2IsOpen, setModal2IsOpen] = useState(false);
     const [coursesOpen, setCoursesOpen] = useState(false);
     const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
+    const [studentCourses, setStudentCourses] = useState([]);
 
     const initialDataForm = {
         firstName: '',
         lastName: '',
         email: '',
-        dateOfBirth: '',
+        dob: '',
         address: '',
-        phoneNumber: '',
+        phone: '',
         gender: ''
     };
     const [formData, setFormData] = useState(initialDataForm);
-
-
-
-
-    // Example courses data
-     const exampleCourses = [
-     { id: 1, name: 'Mathématiques Avancées', professor: 'Dr. Dupont' },
-     { id: 2, name: 'Informatique', professor: 'Mme. Bernard' },
-     { id: 3, name: 'Physique Quantique', professor: 'Dr. Martin' } ];
 
     useEffect(() => {
         const getStudents = async () => {
@@ -46,34 +43,45 @@ const StudentList = () => {
 
         getStudents();
     }, []);
+
     const handleRowClick = async (id) => {
-        try{
+        try {
             const student = await fetchStudentById(id);
             setSelectedStudent(student);
-            setModalIsOpen(true);
-        }catch(error){
+        } catch (error) {
             console.error("Error fetching student id:", error);
+            return;
         }
 
+        try {
+            const courses = await getCoursesByStudentId(id);
+            setStudentCourses(courses);
+        } catch (error) {
+            console.error("Error fetching courses for student:", error);
+        }
+
+        setModalIsOpen(true);
     };
 
-    const closeModal = ()=>{
+
+    const closeModal = () => {
         setModalIsOpen(false);
         setSelectedStudent(null);
-    }
+        setStudentCourses([]); // Clear courses when closing the modal
+    };
 
-    const openAddStudentModal = ()=>{
+    const openAddStudentModal = () => {
         setIsAddStudentModalOpen(true);
-    }
+    };
 
-    const closeAddStudentModal = ()=>{
+    const closeAddStudentModal = () => {
         resetForm();
         setIsAddStudentModalOpen(false);
     };
 
-    const resetForm = ()=>{
+    const resetForm = () => {
         setFormData(initialDataForm);
-    }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -83,13 +91,52 @@ const StudentList = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission
-        console.log(formData);
-        closeAddStudentModal();
+        try {
+            await addStudent(formData);
+            toast.success('Étudiant ajouté avec succès!');
+
+            // Get the data again
+            const updatedStudents = await fetchStudents();
+            setStudents(updatedStudents);
+
+            closeAddStudentModal();
+        } catch (error) {
+            console.error("Error adding student infos", error);
+            toast.error('Erreur lors de l\'ajout de l\'étudiant.');
+        }
     };
 
+    const handleDelete = async (id) => {
+        try {
+            await deleteStudent(id);
+            toast.success('Étudiant supprimé avec succès!');
+            // Get the data again
+            const updatedStudents = await fetchStudents();
+            setStudents(updatedStudents);
+
+            closeModal();
+        } catch (error) {
+            console.error("Error deleting student", error);
+            toast.error('Erreur lors de la suppression de l\'étudiant.');
+        }
+    };
+
+    const handleEditClick = (id) => {
+        navigate(`/edit-student/${id}`, { replace: true });
+        closeModal();
+    };
+
+    const handleAssignButton = (studentId) => {
+        setSelectedStudentId(studentId);
+        setModal2IsOpen(true);
+    };
+
+    const closeModal2 = () => {
+        setModal2IsOpen(false);
+        setSelectedStudentId(null);
+    };
 
     return (
         <main>
@@ -109,7 +156,7 @@ const StudentList = () => {
                 </div>
 
                 <form action="" method="GET" className="searchBar">
-                <input
+                    <input
                         type="text"
                         id="search"
                         placeholder="Rechercher par nom, prénom ou code..."
@@ -124,17 +171,18 @@ const StudentList = () => {
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
-
                     </tr>
                     </thead>
                     <tbody>
                     {students.map(student => (
-                        <tr key={student.id} onClick={() => handleRowClick(student.id)} style={{cursor: 'pointer'}}>
-                            <td>{student.id}</td>
-                            <td>{student.firstName}</td>
-                            <td>{student.lastName}</td>
-                            <td>{student.email}</td>
-                            <td><button className="course-button">Affecter des cours</button></td>
+                        <tr key={student.id}>
+                            <td onClick={() => handleRowClick(student.id)} style={{ cursor: 'pointer' }}>{student.id}</td>
+                            <td onClick={() => handleRowClick(student.id)} style={{ cursor: 'pointer' }}>{student.firstName}</td>
+                            <td onClick={() => handleRowClick(student.id)} style={{ cursor: 'pointer' }}>{student.lastName}</td>
+                            <td onClick={() => handleRowClick(student.id)} style={{ cursor: 'pointer' }}>{student.email}</td>
+                            <td>
+                                <button className="course-button" onClick={() => handleAssignButton(student.id)}>Affecter des cours</button>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
@@ -159,27 +207,25 @@ const StudentList = () => {
                             <p><strong>Phone:</strong> {selectedStudent.phone}</p>
                             <p><strong>Address:</strong> {selectedStudent.address}</p>
                             <p><strong>Genre:</strong> {selectedStudent.gender}</p>
-                            <p><strong>Date de Naissance:</strong> {selectedStudent.dateOfBirth}</p>
                         </div>
-
+                        <p className="dob"><strong>Date de Naissance:</strong> {selectedStudent.dob}</p>
 
                         <div className="bottom">
-                        <h3 onClick={() => setCoursesOpen(!coursesOpen)} style={{cursor: 'pointer'}}>
+                            <h3 onClick={() => setCoursesOpen(!coursesOpen)} style={{ cursor: 'pointer' }}>
                                 Cours Inscrits {coursesOpen ? '-' : '+'}
                             </h3>
                             <div className="button-container">
-                                <button className="supprimer">Supprimer</button>
-                                <button className="modifier">Modifier</button>
+                                <button className="supprimer" onClick={() => handleDelete(selectedStudent.id)}>Supprimer</button>
+                                <button className="modifier" onClick={() => handleEditClick(selectedStudent.id)}>Modifier</button>
                             </div>
                         </div>
                         {coursesOpen && (
                             <ul>
-                                {exampleCourses.map(course => (
-                                    <li key={course.id}>{course.name} - {course.professor}</li>
+                                {studentCourses.map(course => (
+                                    <li key={course.id}>{course.title} - {course.description}</li>
                                 ))}
                             </ul>
                         )}
-
                     </Modal>
                 )}
 
@@ -191,11 +237,13 @@ const StudentList = () => {
                     handleSubmit={handleSubmit}
                 />
 
+                <CourseAssignmentModal
+                    isOpen={modal2IsOpen}
+                    onRequestClose={closeModal2}
+                    studentId={selectedStudentId}
+                />
             </div>
-
         </main>
-
-
     );
 };
 

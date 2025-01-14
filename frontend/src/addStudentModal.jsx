@@ -16,9 +16,9 @@ const AddStudentModal = ({ isOpen, onRequestClose, formData, handleChange, handl
                 <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Prénom" required />
                 <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Nom" required />
                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
-                <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} placeholder="Date de naissance" required />
+                <input type="date" name="dob" value={formData.dob} onChange={handleChange} placeholder="Date de naissance" required />
                 <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Adresse" required />
-                <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder="Numéro de téléphone" required />
+                <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="Numéro de téléphone" required />
                 <select name="gender" value={formData.gender} onChange={handleChange} required>
                     <option value="" disabled hidden>Genre</option>
                     <option value="male">Masculin</option>
