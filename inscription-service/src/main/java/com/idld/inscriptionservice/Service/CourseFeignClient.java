@@ -1,5 +1,6 @@
 package com.idld.inscriptionservice.Service;
 
+import com.idld.inscriptionservice.DTOs.courseDTO;
 import com.idld.inscriptionservice.Model.Course;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -11,5 +12,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface CourseFeignClient {
 
     @GetMapping("/api/courses/{id}")
-    Course getCourseById(@PathVariable("id") Long id);
+    courseDTO getCourseById(@PathVariable("id") Long id);
 }

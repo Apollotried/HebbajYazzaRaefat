@@ -1,8 +1,9 @@
 package com.idld.coursservice.DTO;
 
 
+import com.idld.coursservice.Entity.Syllabus;
 import com.idld.coursservice.modele.Teacher;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
@@ -14,9 +15,7 @@ public class CourseResponseDTO {
     private String description;
     private int credit;
 
-    private long TeacherId;
-
-    @Transient
-    private TeacherDtoResponse teacher;
+    private Long TeacherId;
+    private Long syllabusId;
 
 }

@@ -28,6 +28,18 @@ public class CourseMapperImpl implements CourseMapperInter {
 
         CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
         BeanUtils.copyProperties(course, courseResponseDTO);
+
+        // Manually set the syllabusId
+        if (course.getSyllabus() != null) {
+            courseResponseDTO.setSyllabusId(course.getSyllabus().getSyllabus_id());
+        }else{
+            courseResponseDTO.setSyllabusId(null);
+        }
+
         return courseResponseDTO;
     }
 }
+
+
+
+

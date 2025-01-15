@@ -1,7 +1,5 @@
 package com.idld.coursservice.Entity;
 
-import com.idld.coursservice.DTO.TeacherDtoResponse;
-import com.idld.coursservice.modele.Teacher;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -28,9 +26,7 @@ public class Course {
 
     private long TeacherId;
 
-    @Transient
-    private Teacher teacher;
-
-
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "syllabus_id")
+    private Syllabus syllabus;
 }
-

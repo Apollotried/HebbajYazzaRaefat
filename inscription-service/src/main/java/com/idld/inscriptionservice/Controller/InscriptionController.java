@@ -3,18 +3,27 @@ package com.idld.inscriptionservice.Controller;
 
 import com.idld.inscriptionservice.DTOs.RequestInscriptionDTO;
 import com.idld.inscriptionservice.DTOs.ResponseInscriptionDTO;
+import com.idld.inscriptionservice.DTOs.courseDTO;
 import com.idld.inscriptionservice.Service.InscriptionServiceInterface;
+import com.idld.inscriptionservice.Service.CourseFeignClient;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.idld.inscriptionservice.DTOs.AssignCoursesRequestDTO;
+
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/inscriptions")
 public class InscriptionController implements ControllerInterface{
     private final InscriptionServiceInterface inscriptionService;
+    private CourseFeignClient courseFeignClient;
 
-    public InscriptionController(InscriptionServiceInterface inscriptionService) {
+    public InscriptionController(InscriptionServiceInterface inscriptionService, CourseFeignClient courseFeignClient) {
         this.inscriptionService = inscriptionService;
+        this.courseFeignClient = courseFeignClient;
     }
 
     @Override
@@ -27,5 +36,30 @@ public class InscriptionController implements ControllerInterface{
     @GetMapping
     public List<ResponseInscriptionDTO> getAllInscriptions() {
         return inscriptionService.getAllInscriptions();
+    }
+
+
+    @Override
+    @PostMapping("/assign-courses")
+    public ResponseEntity<?> assignCoursesToStudent(@RequestBody AssignCoursesRequestDTO assignCoursesRequestDTO) {
+        try {
+            inscriptionService.assignCoursesToStudent(assignCoursesRequestDTO);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+
+    @Override
+    @GetMapping("/CoursesByStudentId/{studentId}")
+    public List<courseDTO> getCoursesForStudent(@PathVariable Long studentId) {
+        // Fetch course IDs for the student
+        List<Long> courseIds = inscriptionService.findCourseIdsByStudentId(studentId);
+
+        // Fetch course details for each ID using Feign client
+        return courseIds.stream()
+                .map(courseFeignClient::getCourseById)
+                .collect(Collectors.toList());
     }
 }

@@ -2,7 +2,11 @@ package com.idld.coursservice.Controller;
 
 import com.idld.coursservice.DTO.CourseRequestDTO;
 import com.idld.coursservice.DTO.CourseResponseDTO;
+import com.idld.coursservice.Entity.Course;
+import com.idld.coursservice.Entity.Syllabus;
 import com.idld.coursservice.Service.CourseService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +59,36 @@ public class CourseController {
         return courseService.deleteCourse(id);
     }
 
+    @PostMapping("/syllabus")
+    public Syllabus createSyllabus(@RequestBody Syllabus syllabus) {
+        return courseService.createSyllabus(syllabus);
+    }
 
+    @PostMapping("/assignSyllabus/{courseId}/{syllabusId}")
+    public ResponseEntity<Course> assignSyllabus(@PathVariable Long courseId, @PathVariable Long syllabusId) {
+        Course updatedCourse = courseService.assignSyllabus(courseId, syllabusId);
+        return new ResponseEntity<>(updatedCourse, HttpStatus.OK);
+    }
+
+    @GetMapping("/syllabus")
+    public List<Syllabus> getAllSyllabus(){
+        return courseService.getAllSyllabus();
+    }
+
+    @GetMapping("/syllabus/{syllabusId}")
+    public Syllabus getSyllabusById(@PathVariable Long syllabusId) {
+        return courseService.getSyllabusById(syllabusId);
+    }
+
+
+    @PutMapping("/syllabus/{syllabusId}")
+    public Syllabus updateSyllabus(@PathVariable Long syllabusId, @RequestBody Syllabus syllabus) {
+        return courseService.updateSyllabus(syllabusId, syllabus);
+    }
+
+    @DeleteMapping("/syllabus/{syllabusId}")
+    public void deleteSyllabus(@PathVariable Long syllabusId) {
+        courseService.deleteSyllabus(syllabusId);
+    }
 
 }

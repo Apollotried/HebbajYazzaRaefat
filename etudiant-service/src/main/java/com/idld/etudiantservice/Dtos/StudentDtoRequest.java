@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Data
 @Getter
 @Setter
@@ -21,4 +23,7 @@ public class StudentDtoRequest {
 
     private String phone;
     private String address;
+
+    private String gender;
+    private LocalDate dob;
 }

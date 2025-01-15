@@ -4,6 +4,7 @@ package com.idld.etudiantservice.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -24,6 +25,9 @@ public class Student {
     private String email;
     private String phone;
     private String address;
+    private String gender;
+    private LocalDate dob;
+
 
     // Relationships
     @Transient // Managed in another microservice
