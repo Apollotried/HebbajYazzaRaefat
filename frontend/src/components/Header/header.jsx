@@ -11,7 +11,7 @@ const Header = () => {
                 <ul>
                     <Link to ="/"><li><i className="fas fa-home"></i> Accueil</li></Link>
                     <Link to="/students"><li><i className="fas fa-user-graduate"></i> Gestion des Etudiants</li></Link>
-                    <li><i className="fas fa-book"></i> Gestion des Cours</li>
+                    <Link to="/courses"><li><i className="fas fa-book"></i> Gestion des Cours</li></Link>
                     <li><i className="fas fa-user-tie"></i> Gestion des Enseignants</li>
                 </ul>
             </nav>
