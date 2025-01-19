@@ -14,7 +14,7 @@
         <module name="discovery-service" />
         <module name="communication-service" />
       </profile>
-      <profile name="Annotation profile for etudiant-service" enabled="true">
+      <profile name="Annotation profile for config-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -23,7 +23,15 @@
         </processorPath>
         <module name="inscription-service" />
         <module name="etudiant-service" />
-        <module name="config-service" />
+      </profile>
+      <profile name="Annotation profile for security" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="security" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -41,6 +49,7 @@
       <module name="inscription-service" options="-parameters" />
       <module name="prof-service" options="-parameters" />
       <module name="resultat-service" options="-parameters" />
+      <module name="security" options="-parameters" />
       <module name="testModule" options="-parameters" />
     </option>
   </component>
