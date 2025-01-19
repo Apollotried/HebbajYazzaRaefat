@@ -1,6 +1,7 @@
 package com.idld.resultatservice.controller;
 
 import com.idld.resultatservice.Dtos.CourseDto;
+import com.idld.resultatservice.Dtos.ResultDTORequest;
 import com.idld.resultatservice.Dtos.ResultDto;
 import com.idld.resultatservice.Dtos.StudentDto;
 import com.idld.resultatservice.entities.Result;
@@ -39,7 +40,7 @@ public class ResultController {
 
     // Create a new result
     @PostMapping
-    public ResponseEntity<Result> createResult(@RequestBody ResultDto resultDto) {
+    public ResponseEntity<Result> createResult(@RequestBody ResultDTORequest resultDto) {
         Result result = resultService.createResult(resultDto);
         return ResponseEntity.ok(result); // Respond with HTTP 200 and the created result
     }
@@ -58,6 +59,13 @@ public class ResultController {
         return ResponseEntity.ok(results);
     }
 
+    //student infos and grade by courseId
+    @GetMapping("/course/{courseId}/students-grades")
+    public List<ResultDto> getStudentsWithGradesByCourse(@PathVariable long courseId){
+        return resultService.getStudentsWithGradesByCourse(courseId);
+    }
+
+
     // Update a result
     @PutMapping("/{resultId}")
     public ResponseEntity<Result> updateResult(@PathVariable long resultId, @RequestBody ResultDto resultDto) {
@@ -71,4 +79,17 @@ public class ResultController {
         resultService.deleteResult(resultId);
         return ResponseEntity.noContent().build(); // Respond with HTTP 204 (No Content)
     }
+
+
+    @PostMapping("/batch")
+    public ResponseEntity<String> applyBatchGrades(@RequestBody List<ResultDTORequest> results) {
+        try {
+            resultService.applyBatchGrades(results);
+            return ResponseEntity.ok("Batch grades applied successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error applying batch grades: " + e.getMessage());
+        }
+    }
+
+
 }

@@ -1,9 +1,6 @@
 package com.idld.inscriptionservice.Service;
 
-import com.idld.inscriptionservice.DTOs.AssignCoursesRequestDTO;
-import com.idld.inscriptionservice.DTOs.RequestInscriptionDTO;
-import com.idld.inscriptionservice.DTOs.ResponseInscriptionDTO;
-import com.idld.inscriptionservice.DTOs.courseDTO;
+import com.idld.inscriptionservice.DTOs.*;
 import com.idld.inscriptionservice.Entity.Inscription;
 import com.idld.inscriptionservice.Mapper.InscriptionMapperInterface;
 import com.idld.inscriptionservice.Model.Course;
@@ -99,5 +96,18 @@ public class InscriptionServiceImpl implements InscriptionServiceInterface {
                 .collect(Collectors.toList());
     }
 
+
+
+    @Override
+    public List<Student> findStudentsByCourseId(Long courseId) {
+        List<Inscription> inscriptions = inscriptionRepository.findByCourseId(courseId);
+
+        return inscriptions.stream()
+                .map(inscription -> {
+                    // Fetch student details using Feign client
+                    return studentFeignClient.getStudentById(inscription.getStudentId());
+                })
+                .collect(Collectors.toList());
+    }
 
 }

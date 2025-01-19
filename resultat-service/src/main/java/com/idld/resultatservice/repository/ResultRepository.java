@@ -11,5 +11,7 @@ public interface ResultRepository extends JpaRepository<Result, Long> {
 
     List<Result> findByCourseId(long courseId);
 
+    public Result findByStudentIdAndCourseId(Long studentId, Long courseId);
+
 
 }

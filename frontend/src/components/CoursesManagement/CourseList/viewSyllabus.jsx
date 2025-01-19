@@ -106,7 +106,7 @@ const ViewSyllabus = () => {
             const response = await updateSyllabus(syllabus.syllabus_id, updatedSyllabus);
             console.log("Response:", response); // Log the response for inspection
             setIsChanged(false);
-            toast.success('Syllabus updated successfully!');
+            toast.success('Syllabus mis à jour avec succès !');
         } catch (error) {
             console.error("Error updating syllabus:", error);
             toast.error('Error updating syllabus.');

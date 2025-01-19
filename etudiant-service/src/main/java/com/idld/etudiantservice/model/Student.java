@@ -28,12 +28,4 @@ public class Student {
     private String gender;
     private LocalDate dob;
 
-
-    // Relationships
-    @Transient // Managed in another microservice
-    private List<Long> courseIds;
-
-    @Transient // Managed in another microservice
-    private List<Long> resultIds;
-
 }

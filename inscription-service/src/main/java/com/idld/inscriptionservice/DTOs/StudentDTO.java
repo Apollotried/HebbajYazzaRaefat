@@ -1,20 +1,16 @@
-package com.idld.resultatservice.Dtos;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+package com.idld.inscriptionservice.DTOs;
 
 import lombok.*;
 
 import java.time.LocalDate;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@ToString
+
 @Getter
 @Setter
-
-public class StudentDto {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class StudentDTO {
     private Long id;
     private String firstName;
     private String lastName;

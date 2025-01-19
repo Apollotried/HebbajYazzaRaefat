@@ -1,5 +1,6 @@
 package com.idld.resultatservice.mapper;
 
+import com.idld.resultatservice.Dtos.ResultDTORequest;
 import com.idld.resultatservice.Dtos.ResultDto;
 import com.idld.resultatservice.entities.Result;
 import org.springframework.beans.BeanUtils;
@@ -19,7 +20,7 @@ public class ResultMapperImpl implements ResultMapperInterf{
     }
 
     @Override
-    public Result resultDtoToResult(ResultDto resultDto) {
+    public Result resultDtoToResult(ResultDTORequest resultDto) {
         if (resultDto==null){
             return null;
         }

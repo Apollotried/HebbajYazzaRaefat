@@ -1,6 +1,7 @@
 package com.idld.resultatservice.service;
 
 import com.idld.resultatservice.Dtos.CourseDto;
+import com.idld.resultatservice.Dtos.ResultDTORequest;
 import com.idld.resultatservice.Dtos.ResultDto;
 import com.idld.resultatservice.Dtos.StudentDto;
 import com.idld.resultatservice.controller.CourseClient;
@@ -35,7 +36,7 @@ public class ResultServiceImpl implements ResultServiceInterf{
 
 
     @Override
-    public Result createResult(ResultDto resultDto) {
+    public Result createResult(ResultDTORequest resultDto) {
         StudentDto student = studentClient.getStudentById(resultDto.getStudentId());
         CourseDto course = courseClient.getCourseById(resultDto.getCourseId());
 
@@ -81,7 +82,6 @@ public class ResultServiceImpl implements ResultServiceInterf{
         if (resultOptional.isPresent()) {
             Result result = resultOptional.get();
             result.setGrade(resultDto.getGrade()); // Update grade from DTO
-            result.setSemester(resultDto.getSemester()); // Update semester from DTO
             return resultRepository.save(result);  // Save the updated result
         } else {
             throw new IllegalArgumentException("Result not found");
@@ -103,4 +103,50 @@ public class ResultServiceImpl implements ResultServiceInterf{
     public CourseDto getCourseById(long courseId) {
         return courseClient.getCourseById(courseId);
     }
+
+
+    @Override
+    public List<ResultDto> getStudentsWithGradesByCourse(long courseId) {
+        List<Result> results = resultRepository.findByCourseId(courseId);
+        return results.stream().map(result ->{
+            StudentDto student = studentClient.getStudentById(result.getStudentId());
+            return new ResultDto(result.getStudentId(), result.getCourseId(), result.getGrade(), student);
+                }).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void applyBatchGrades(List<ResultDTORequest> results) {
+        // Validate and process each result
+        List<Result> resultEntities = results.stream().map(resultDto -> {
+            // Validate student and course
+            StudentDto student = studentClient.getStudentById(resultDto.getStudentId());
+            CourseDto course = courseClient.getCourseById(resultDto.getCourseId());
+
+            if (student == null || course == null) {
+                throw new EntityNotFoundException("Student or Course not found for ID: "
+                        + resultDto.getStudentId() + ", " + resultDto.getCourseId());
+            }
+
+            // Check if the result already exists in the database
+            Result existingResult = resultRepository.findByStudentIdAndCourseId(resultDto.getStudentId(), resultDto.getCourseId());
+
+            if (existingResult != null) {
+                // If the result already exists, update the grade
+                existingResult.setGrade(resultDto.getGrade());
+                return existingResult;
+            } else {
+                // If it does not exist, create a new result entity
+                return resultMapperInterf.resultDtoToResult(resultDto);
+            }
+        }).collect(Collectors.toList());
+
+        // Save all results in a batch
+        resultRepository.saveAll(resultEntities);
+    }
+
+
+
+
+
 }

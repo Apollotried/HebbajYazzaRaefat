@@ -52,6 +52,8 @@ export const updateSyllabus = async (id, syllabus) => {
 };
 
 
+
+
 export const addSyllabus = async (syllabus) => {
     const response = await axiosInstance.post("/COURS-SERVICE/api/courses/syllabus", syllabus);
     return response.data;

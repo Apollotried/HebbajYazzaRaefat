@@ -9,3 +9,8 @@ export const getCoursesByStudentId = async (studentId) => {
     const response = await axiosInstance.get(`/INSCRIPTION-SERVICE/api/inscriptions/CoursesByStudentId/${studentId}`);
     return response.data;
 }
+
+export const fetchStudentsByCourseId = async (courseId) => {
+    const response = await axiosInstance.get(`/INSCRIPTION-SERVICE/api/inscriptions/course/${courseId}/students`);
+    return response.data;
+}

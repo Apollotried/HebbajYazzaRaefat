@@ -20,7 +20,6 @@ public class Result {
     private long studentId;
     private long courseId;
     private double grade;
-    private int semester;
 
     @Transient
     private StudentDto student;

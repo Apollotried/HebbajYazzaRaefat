@@ -16,20 +16,5 @@ public class ResultatServiceApplication {
         SpringApplication.run(ResultatServiceApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner start(ResultRepository Repository)
-    {
-        return args-> {
-            Result r1 = Result.builder()
-                    .studentId(1)
-                    .courseId(1)
-                    .grade(10)
-                    .semester(1)
-                    .build() ;
-
-            Repository.save(r1) ;
-
-        } ;
-    }
 
 }

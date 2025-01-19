@@ -9,10 +9,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditStudent from "./components/EditStudent.jsx";
 import CoursesManagement from "./CoursesManagement.jsx";
+
+import ResultManagement from "./ResultManagement.jsx"
 import EditCourse from "./components/CoursesManagement/EditCourse.jsx";
 
 import AddSyllabus from "./components/CoursesManagement/CourseList/addSyllabus.jsx";
 import ViewSyllabus from "./components/CoursesManagement/CourseList/viewSyllabus.jsx";
+import GradeManagement from "./GradeManagement.jsx";
 
 
 function App() {
@@ -31,6 +34,8 @@ function App() {
                   <Route path="/add-syllabus" element={<AddSyllabus />} />
                   <Route path="/view-syllabus" element={<ViewSyllabus />} />
                   <Route path="/courses" element={<CoursesManagement />} />
+                  <Route path="/results" element={<ResultManagement />} />
+                  <Route path="/grades" element={<GradeManagement />} />
               </Routes>
           </div>
 

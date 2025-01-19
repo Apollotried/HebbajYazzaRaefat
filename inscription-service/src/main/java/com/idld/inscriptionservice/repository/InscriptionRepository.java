@@ -17,4 +17,9 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Long> 
 
     @Query("SELECT i.courseId FROM Inscription i WHERE i.studentId = :studentId")
     List<Long> findCourseIdsByStudentId(Long studentId);
+
+    @Query("SELECT i FROM Inscription i WHERE i.courseId = :courseId")
+    List<Inscription> findByCourseId(Long courseId);
+
+
 }

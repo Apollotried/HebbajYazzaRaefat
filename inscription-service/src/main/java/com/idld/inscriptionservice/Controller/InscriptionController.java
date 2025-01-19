@@ -4,6 +4,7 @@ package com.idld.inscriptionservice.Controller;
 import com.idld.inscriptionservice.DTOs.RequestInscriptionDTO;
 import com.idld.inscriptionservice.DTOs.ResponseInscriptionDTO;
 import com.idld.inscriptionservice.DTOs.courseDTO;
+import com.idld.inscriptionservice.Model.Student;
 import com.idld.inscriptionservice.Service.InscriptionServiceInterface;
 import com.idld.inscriptionservice.Service.CourseFeignClient;
 import org.springframework.http.HttpStatus;
@@ -62,4 +63,30 @@ public class InscriptionController implements ControllerInterface{
                 .map(courseFeignClient::getCourseById)
                 .collect(Collectors.toList());
     }
+
+
+
+    @GetMapping("/course/{courseId}/students")
+    public ResponseEntity<List<Student>> getStudentsByCourseId(@PathVariable Long courseId) {
+        try {
+            List<Student> students = inscriptionService.findStudentsByCourseId(courseId);
+            return ResponseEntity.ok(students);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

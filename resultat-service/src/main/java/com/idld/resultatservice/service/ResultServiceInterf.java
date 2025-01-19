@@ -1,6 +1,7 @@
 package com.idld.resultatservice.service;
 
 import com.idld.resultatservice.Dtos.CourseDto;
+import com.idld.resultatservice.Dtos.ResultDTORequest;
 import com.idld.resultatservice.Dtos.ResultDto;
 import com.idld.resultatservice.Dtos.StudentDto;
 import com.idld.resultatservice.entities.Result;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface ResultServiceInterf {
     //create a new result
-    Result createResult(ResultDto resultDto);
+    Result createResult(ResultDTORequest resultDto);
 
     //fetch by a student
     List<ResultDto> getResultByStudent(long studentId);
@@ -27,4 +28,8 @@ public interface ResultServiceInterf {
     //test
     public StudentDto getStudentById(long studentId);
     public CourseDto getCourseById(long courseId);
+
+    public List<ResultDto> getStudentsWithGradesByCourse(long courseId);
+
+    public void applyBatchGrades(List<ResultDTORequest> results);
 }

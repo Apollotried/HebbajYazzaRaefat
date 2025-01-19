@@ -30,6 +30,25 @@ const CourseList = () => {
     const [isAssignSyllabusModalOpen, setIsAssignSyllabusModalOpen] = useState(false);
     const [selectedSyllabusId, setSelectedSyllabusId] = useState('');
 
+    const [search, setSearch] = useState("");
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const coursPerPage = 5;
+
+    // Filter and Pagination logic
+    const filteredCourses = courses.filter(
+        item => item.title.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const indexOfLastCours = currentPage * coursPerPage;
+    const indexOfFirstCours = indexOfLastCours - coursPerPage;
+    const currentCours = filteredCourses.slice(indexOfFirstCours, indexOfLastCours);
+
+    const totalPages = Math.ceil(filteredCourses.length / coursPerPage);
+
+
+
+
 
 
     const initialCourseForm = {
@@ -211,7 +230,7 @@ const CourseList = () => {
                         id="search"
                         placeholder="Rechercher par titre"
                         name="search"
-
+                        onChange={(e) => setSearch(e.target.value)}
                     />
                 </form>
                 <table>
@@ -224,7 +243,7 @@ const CourseList = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {courses.map(cours => (
+                    {currentCours.map(cours => (
                         <tr key={cours.id}>
                             <td onClick={() => handleRowClick(cours.id)} style={{cursor: 'pointer'}}>{cours.id}</td>
                             <td onClick={() => handleRowClick(cours.id)} style={{cursor: 'pointer'}}>{cours.title}</td>
@@ -252,6 +271,13 @@ const CourseList = () => {
                     ))}
                     </tbody>
                 </table>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+
+
                 {selectedCourse && (
                     <Modal
                         isOpen={ModalIsOpen}
