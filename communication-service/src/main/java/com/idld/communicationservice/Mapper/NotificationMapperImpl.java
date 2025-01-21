@@ -12,16 +12,14 @@ public class NotificationMapperImpl implements NotificationMapper {
     @Override
     public Notification toEntity(RequestNotificationDto requestNotificationDto) {
         Notification notification = new Notification();
-        // Copy properties from DTO to entity
         BeanUtils.copyProperties(requestNotificationDto, notification);
-        notification.setStatus("PENDING");  // Set default status
+        notification.setStatus("PENDING");
         return notification;
     }
 
     @Override
     public ResponseNotificationDto toDto(Notification notification) {
         ResponseNotificationDto responseNotificationDto = new ResponseNotificationDto();
-        // Copy properties from entity to DTO
         BeanUtils.copyProperties(notification, responseNotificationDto);
         return responseNotificationDto;
     }

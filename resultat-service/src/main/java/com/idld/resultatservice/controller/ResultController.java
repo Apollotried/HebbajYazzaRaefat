@@ -4,25 +4,30 @@ import com.idld.resultatservice.Dtos.CourseDto;
 import com.idld.resultatservice.Dtos.ResultDTORequest;
 import com.idld.resultatservice.Dtos.ResultDto;
 import com.idld.resultatservice.Dtos.StudentDto;
+import com.idld.resultatservice.KafkaGradeConsumer.KafkaConsumerService;
 import com.idld.resultatservice.entities.Result;
-import com.idld.resultatservice.repository.ResultRepository;
 import com.idld.resultatservice.service.ResultServiceInterf;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/results") // Base URL for all endpoints in this controller
 public class ResultController {
 
-    private final ResultServiceInterf resultService;
+        private final KafkaConsumerService kafkaConsumerService;
 
+        private final ResultServiceInterf resultService;
 
-    // Constructor Injection
-    public ResultController(ResultServiceInterf resultService) {
-        this.resultService = resultService;
-    }
+        // Constructor Injection
+        public ResultController(ResultServiceInterf resultService,KafkaConsumerService  kafkaConsumerService) {
+            this.resultService = resultService;
+            this. kafkaConsumerService =  kafkaConsumerService;
+        }
+
 
     //testing the communication
     @GetMapping("/student-info/{studentId}")
@@ -52,6 +57,30 @@ public class ResultController {
         return ResponseEntity.ok(results);
     }
 
+    @GetMapping("/studentKafka/{studentId}")
+    public ResponseEntity<List<ResultDto>> getResultsByStudentKafka(@PathVariable long studentId) {
+        // Get all results
+        List<ResultDto> allResults = kafkaConsumerService.getResultDtos();
+        List<ResultDto> filteredResults = new ArrayList<>();
+
+        // Using for loop to filter the results based on studentId
+        for (ResultDto result : allResults) {
+            if (result.getStudentId() == studentId) {
+                filteredResults.add(result);
+            }
+        }
+
+        // Return the filtered results wrapped in ResponseEntity
+        if (filteredResults.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Return 204 if no results found
+        } else {
+            return ResponseEntity.ok(filteredResults); // Return 200 with the list of results
+        }
+    }
+
+
+
+
     // Get results by course ID
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<ResultDto>> getResultsByCourse(@PathVariable long courseId) {
@@ -64,6 +93,9 @@ public class ResultController {
     public List<ResultDto> getStudentsWithGradesByCourse(@PathVariable long courseId){
         return resultService.getStudentsWithGradesByCourse(courseId);
     }
+
+
+
 
 
     // Update a result
@@ -89,7 +121,7 @@ public class ResultController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error applying batch grades: " + e.getMessage());
         }
-    }
 
+    }
 
 }

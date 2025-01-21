@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableFeignClients
+
 public class CoursServiceApplication {
 
     public static void main(String[] args) {

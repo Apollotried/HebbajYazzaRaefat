@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 public interface ResultServiceInterf {
+
     //create a new result
     Result createResult(ResultDTORequest resultDto);
 

@@ -16,7 +16,9 @@ import EditCourse from "./components/CoursesManagement/EditCourse.jsx";
 import AddSyllabus from "./components/CoursesManagement/CourseList/addSyllabus.jsx";
 import ViewSyllabus from "./components/CoursesManagement/CourseList/viewSyllabus.jsx";
 import GradeManagement from "./GradeManagement.jsx";
-
+import SendNotification from "./NotificationEmail.jsx";
+import NotificationList from "./AfficherEmails.jsx";
+import KafkaNotifications from "./MessagesKafka.jsx";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -36,6 +38,9 @@ function App() {
                   <Route path="/courses" element={<CoursesManagement />} />
                   <Route path="/results" element={<ResultManagement />} />
                   <Route path="/grades" element={<GradeManagement />} />
+                  <Route path="/send-notification" element={<SendNotification />} />
+                    <Route path="/notifications" element={<NotificationList />} />
+                    <Route path="/kafka-notifications" element={<KafkaNotifications />} />
               </Routes>
           </div>
 

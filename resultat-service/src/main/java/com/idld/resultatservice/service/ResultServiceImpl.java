@@ -1,9 +1,9 @@
 package com.idld.resultatservice.service;
-
 import com.idld.resultatservice.Dtos.CourseDto;
 import com.idld.resultatservice.Dtos.ResultDTORequest;
 import com.idld.resultatservice.Dtos.ResultDto;
 import com.idld.resultatservice.Dtos.StudentDto;
+import com.idld.resultatservice.Producer.KafkaProducerService;
 import com.idld.resultatservice.controller.CourseClient;
 import com.idld.resultatservice.controller.StudentClient;
 import com.idld.resultatservice.entities.Result;
@@ -25,29 +25,43 @@ public class ResultServiceImpl implements ResultServiceInterf{
     CourseClient courseClient;
     StudentClient studentClient;
     ResultMapperInterf resultMapperInterf;
+    KafkaProducerService kafkaProducerService;
 
-    public ResultServiceImpl(ResultRepository resultRepository, StudentClient studentClient, CourseClient courseClient, ResultMapperInterf resultMapperInterf) {
+    public ResultServiceImpl(ResultRepository resultRepository, StudentClient studentClient, CourseClient courseClient, ResultMapperInterf resultMapperInterf, KafkaProducerService kafkaProducerService) {
         this.resultRepository = resultRepository;
         this.courseClient = courseClient;
         this.studentClient = studentClient;
         this.resultMapperInterf = resultMapperInterf;
+        this.kafkaProducerService=kafkaProducerService;
     }
 
 
 
     @Override
     public Result createResult(ResultDTORequest resultDto) {
+        // Fetch student and course details
         StudentDto student = studentClient.getStudentById(resultDto.getStudentId());
         CourseDto course = courseClient.getCourseById(resultDto.getCourseId());
 
+        // Validate if the student and course exist
         if (student == null || course == null) {
             throw new EntityNotFoundException("Student or Course not found");
         }
 
+        // Map DTO to Result entity
         Result result = resultMapperInterf.resultDtoToResult(resultDto);
 
-        return resultRepository.save(result);
+        // Save the result in the database
+        Result savedResult = resultRepository.save(result);
+
+        // Publish the result to Kafka
+        String message = String.format("New Result: Student ID: %d, Course ID: %d, Grade: %.2f",
+                savedResult.getStudentId(), savedResult.getCourseId(), savedResult.getGrade());
+        kafkaProducerService.sendMessage(message);
+
+        return savedResult;
     }
+
 
 
     @Override
@@ -111,7 +125,7 @@ public class ResultServiceImpl implements ResultServiceInterf{
         return results.stream().map(result ->{
             StudentDto student = studentClient.getStudentById(result.getStudentId());
             return new ResultDto(result.getStudentId(), result.getCourseId(), result.getGrade(), student);
-                }).collect(Collectors.toList());
+        }).collect(Collectors.toList());
     }
 
 

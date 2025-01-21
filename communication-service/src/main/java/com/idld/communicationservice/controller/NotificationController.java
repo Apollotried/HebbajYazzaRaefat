@@ -2,6 +2,7 @@ package com.idld.communicationservice.controller;
 
 
 import com.idld.communicationservice.Dto.ResponseNotificationDto;
+import com.idld.communicationservice.Dto.ResultDto;
 import com.idld.communicationservice.Entity.Notification;
 import com.idld.communicationservice.service.NotificationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notifications")
-public class NotificationController implements NotificationControllerInterface{
+@RequestMapping("/api/notificationsEmail")
+public class NotificationController implements NotificationControllerInterface {
+
 
     @Autowired
     private NotificationServiceInterface notificationService;
@@ -38,12 +40,5 @@ public class NotificationController implements NotificationControllerInterface{
 
         return notificationService.getAllNotifications();
     }
-    @GetMapping("/{id}")
-    public ResponseNotificationDto getNotificationById(@PathVariable Long id) {
-        ResponseNotificationDto notification = notificationService.getNotificationById(id);
-        if (notification == null) {
-            return null;
-        }
-        return notification;
-    }
+
 }

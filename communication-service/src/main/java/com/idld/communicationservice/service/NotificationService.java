@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NotificationService implements NotificationServiceInterface {
+public class NotificationService implements com.idld.communicationservice.service.NotificationServiceInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(NotificationService.class);
 
