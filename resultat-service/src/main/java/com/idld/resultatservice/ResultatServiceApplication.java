@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @EnableFeignClients
 @SpringBootApplication
-@CrossOrigin(origins = "*")
 public class ResultatServiceApplication {
 
     public static void main(String[] args) {

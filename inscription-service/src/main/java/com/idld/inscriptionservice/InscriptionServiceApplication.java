@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
 @EnableFeignClients
-@CrossOrigin(origins = "*")
 public class InscriptionServiceApplication {
 
     public static void main(String[] args) {

@@ -15,6 +15,8 @@ import com.idld.inscriptionservice.DTOs.AssignCoursesRequestDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
 @RestController
 @RequestMapping("/api/inscriptions")
 public class InscriptionController implements ControllerInterface{
