@@ -5,6 +5,8 @@ import com.idld.etudiantservice.Dtos.StudentDtoResponse;
 import com.idld.etudiantservice.model.Student;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 class StudentMapperImplTest {
     private final StudentMapperImpl studentMapper = new StudentMapperImpl();
@@ -16,7 +18,9 @@ class StudentMapperImplTest {
                 "Doe",
                 "john.doe@example.com",
                 "1234567890",
-                "123 Main St");
+                "123 Main St",
+                "test",
+                LocalDate.of(1995, 10, 25));
 
         Student student = studentMapper.ToStudent(dto);
         assertNotNull(student);
