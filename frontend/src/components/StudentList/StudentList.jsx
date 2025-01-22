@@ -177,7 +177,10 @@ const StudentList = () => {
                         id="search"
                         placeholder="Rechercher par nom ou prénom"
                         name="search"
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            setCurrentPage(1);
+                        }}
                     />
                 </form>
                 <table>

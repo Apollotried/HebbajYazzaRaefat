@@ -12,6 +12,15 @@ const Header = () => {
                     <Link to="/"><li><i className="fas fa-home"></i> Accueil</li></Link>
                     <Link to="/students"><li><i className="fas fa-user-graduate"></i> Gestion des Étudiants</li></Link>
                     <Link to="/courses"><li><i className="fas fa-book"></i> Gestion des Cours</li></Link>
+
+                    <Link to="/grades">
+                        <li><i className="fas fa-book-open"></i> Gestion des Notes</li>
+                    </Link>
+
+                    <Link to="/results">
+                        <li><i className="fas fa-graduation-cap"></i> Gestion des Résultats</li>
+                    </Link>
+
                     <Link to="/send-notification"><li><i className="fas fa-envelope"></i> Envoyer Notification</li></Link>
                     <Link to="/notifications"><li><i className="fas fa-bell"></i> Liste des Notifications</li></Link>
                     <Link to="/kafka-notifications"><li><i className="fas fa-exchange-alt"></i> Kafka Notifications</li></Link>

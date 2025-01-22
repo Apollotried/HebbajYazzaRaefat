@@ -17,6 +17,7 @@ const ResultHome = () => {
 
     // Filter and Pagination logic
     const filteredStudents = students.filter(item =>
+        item.student &&
         (item.student.firstName.toLowerCase().includes(search.toLowerCase()) ||
             item.student.lastName.toLowerCase().includes(search.toLowerCase())) &&
         (gradeFilter === "all" ||
@@ -27,6 +28,9 @@ const ResultHome = () => {
 
 
     const sortedStudents = filteredStudents.sort((a, b) => {
+        if (!a.student || !b.student) {
+            return 0;
+        }
         if (sortOrder === 'nameAsc') {
             return a.student.firstName.localeCompare(b.student.firstName);
         } else if (sortOrder === 'nameDesc') {
