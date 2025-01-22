@@ -17,31 +17,31 @@
         </processorPath>
         <module name="security" />
       </profile>
-      <profile name="Annotation profile for resultat-service" enabled="true">
+      <profile name="Annotation profile for prof-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="cours-service" />
-        <module name="resultat-service" />
+        <module name="config-service" />
         <module name="prof-service" />
-        <module name="gateway-service" />
+        <module name="inscription-service" />
+        <module name="etudiant-service" />
         <module name="discovery-service" />
-        <module name="communication-service" />
       </profile>
-      <profile name="Annotation profile for config-service" enabled="true">
+      <profile name="Annotation profile for communication-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="inscription-service" />
-        <module name="etudiant-service" />
-        <module name="config-service" />
+        <module name="resultat-service" />
+        <module name="gateway-service" />
+        <module name="communication-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Component
-@FeignClient(name = "cours-service", url = "http://localhost:8081")
+@FeignClient(name = "cours-service", url = "http://cours-dock:8081")
 public interface CourseClient {
     @GetMapping("/api/courses/{id}")
     CourseDto getCourseById(@PathVariable("id") long courseId);
