@@ -9,6 +9,7 @@ import com.idld.resultatservice.entities.Result;
 import com.idld.resultatservice.service.ResultServiceInterf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,12 +34,14 @@ public class ResultController {
 
     //testing the communication
     @GetMapping("/student-info/{studentId}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<StudentDto> getStudentInfo(@PathVariable long studentId) {
         StudentDto student = resultService.getStudentById(studentId);
         return ResponseEntity.ok(student);
     }
 
     @GetMapping("/course-info/{courseId}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<CourseDto> getCoursetInfo(@PathVariable long courseId) {
         CourseDto course = resultService.getCourseById(courseId);
         return ResponseEntity.ok(course);
@@ -47,19 +50,23 @@ public class ResultController {
 
     // Create a new result
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Result> createResult(@RequestBody ResultDTORequest resultDto) {
         Result result = resultService.createResult(resultDto);
         return ResponseEntity.ok(result); // Respond with HTTP 200 and the created result
     }
 
     // Get results by student ID
+
     @GetMapping("/student/{studentId}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<ResultDto>> getResultsByStudent(@PathVariable long studentId) {
         List<ResultDto> results = resultService.getResultByStudent(studentId);
         return ResponseEntity.ok(results);
     }
 
     @GetMapping("/studentKafka/{studentId}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<ResultDto>> getResultsByStudentKafka(@PathVariable long studentId) {
         // Get all results
         List<ResultDto> allResults = kafkaConsumerService.getResultDtos();
@@ -85,6 +92,7 @@ public class ResultController {
 
     // Get results by course ID
     @GetMapping("/course/{courseId}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<ResultDto>> getResultsByCourse(@PathVariable long courseId) {
         List<ResultDto> results = resultService.getResultByCourse(courseId);
         return ResponseEntity.ok(results);
@@ -92,6 +100,7 @@ public class ResultController {
 
     //student infos and grade by courseId
     @GetMapping("/course/{courseId}/students-grades")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public List<ResultDto> getStudentsWithGradesByCourse(@PathVariable long courseId){
         return resultService.getStudentsWithGradesByCourse(courseId);
     }
@@ -102,6 +111,7 @@ public class ResultController {
 
     // Update a result
     @PutMapping("/{resultId}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Result> updateResult(@PathVariable long resultId, @RequestBody ResultDto resultDto) {
         Result updatedResult = resultService.updateResult(resultId, resultDto);
         return ResponseEntity.ok(updatedResult);
@@ -109,6 +119,7 @@ public class ResultController {
 
     // Delete a result
     @DeleteMapping("/{resultId}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Void> deleteResult(@PathVariable long resultId) {
         resultService.deleteResult(resultId);
         return ResponseEntity.noContent().build(); // Respond with HTTP 204 (No Content)
@@ -116,6 +127,7 @@ public class ResultController {
 
 
     @PostMapping("/batch")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<String> applyBatchGrades(@RequestBody List<ResultDTORequest> results) {
         try {
             resultService.applyBatchGrades(results);

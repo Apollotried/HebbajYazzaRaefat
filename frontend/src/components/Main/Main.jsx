@@ -5,6 +5,7 @@ import Card from "../Card/Card.jsx";
 import { fetchStudentCount } from '../../api/studentApi';
 import { fetchCourseCount} from "../../api/coursApi.js";
 import {fetchTeachersCount} from "../../api/teacherApi.js";
+import LogoutButton from "../LogoutButton.jsx";
 
 const Main = () => {
     const [studentCount, setStudentCount] = useState(null);
@@ -49,8 +50,7 @@ const Main = () => {
             <div className="hori">
                 <h6 className="title">Page d'accueil</h6>
                 <div className="config">
-                    <a><i className="fas fa-user"></i> admin</a>
-                    <a><i className="fas fa-sign-out-alt"></i> se déconnecter</a>
+                    <LogoutButton />
                 </div>
             </div>
 
@@ -87,6 +87,7 @@ const Main = () => {
                                                                                                  className="link-card">Annonces</a>
                     <a href="/reports" className="link-card">Voir les rapports</a></div>
             </div>
+
         </main>
     );
 };

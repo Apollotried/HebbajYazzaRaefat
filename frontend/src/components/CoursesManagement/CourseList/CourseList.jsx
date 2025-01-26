@@ -16,6 +16,7 @@ import {addStudent, deleteStudent, fetchStudentById, fetchStudents} from "../../
 import {toast} from "react-toastify";
 import AddCourseModal from "../addCourseModal.jsx";
 import { useNavigate } from 'react-router-dom';
+import LogoutButton from "../../LogoutButton.jsx";
 
 const CourseList = () => {
     const navigate = useNavigate();
@@ -161,7 +162,7 @@ const CourseList = () => {
     };
 
     const handleAddSyllabus = () => {
-        navigate('/add-syllabus');
+        navigate('/admin/add-syllabus');
     };
 
     const openAssignSyllabusModal = () => {
@@ -198,7 +199,7 @@ const CourseList = () => {
     }
 
     const handleViewSyllabus = (course) => {
-        navigate('/view-syllabus', { state: { course } });
+        navigate('/admin/view-syllabus', { state: { course } });
     };
 
 
@@ -209,8 +210,7 @@ const CourseList = () => {
             <div className="hori">
                 <h6 className="title">Gestion des Cours</h6>
                 <div className="config">
-                    <a><i className="fas fa-user"></i> admin</a>
-                    <a><i className="fas fa-sign-out-alt"></i> se déconnecter</a>
+                    <LogoutButton />
                 </div>
             </div>
 

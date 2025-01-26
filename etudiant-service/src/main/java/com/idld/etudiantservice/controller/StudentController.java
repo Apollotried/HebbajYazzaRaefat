@@ -6,6 +6,7 @@ import com.idld.etudiantservice.model.Student;
 import com.idld.etudiantservice.service.StudentServiceInter;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,11 +24,13 @@ public class StudentController {
 
 
     @GetMapping("/students")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public List<StudentDtoResponse> getStudents() {
         return studentServiceInter.getAllStudents();
     }
 
     @GetMapping("/students/count")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public long getStudentsCount() {
         return studentServiceInter.getTotalStudentsCount();
     }
@@ -35,26 +38,31 @@ public class StudentController {
 
 
     @GetMapping("/students/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public StudentDtoResponse getStudentById(@PathVariable long id) {
         return studentServiceInter.getStudentById(id);
     }
 
     @PostMapping("/students")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public void create(@RequestBody @Valid StudentDtoRequest student) {
         studentServiceInter.addStudent(student);
     }
 
     @PutMapping("/students/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public void update(@PathVariable long id, @RequestBody StudentDtoRequest student) {
         studentServiceInter.updateStudent(id, student);
     }
 
     @DeleteMapping("/students/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public void delete(@PathVariable long id) {
         studentServiceInter.deleteStudent(id);
     }
 
     @RequestMapping("/test")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public String test() {
         return "Controller is working!";
     }

@@ -51,7 +51,7 @@ const AddSyllabus = () => {
             exams: [{ semaine: 1, examen: '' }],
             gradingPolicy: ''
         });
-        navigate('/courses');
+        navigate('/admin/courses');
     };
 
     const handleSubmit = async (e) => {
@@ -77,7 +77,7 @@ const AddSyllabus = () => {
         try {
             await addSyllabus(syllabusData);
             toast.success('Syllabus ajouté avec succès!');
-            navigate('/courses');
+            navigate('/admin/courses');
         } catch (error) {
             console.error('Erreur lors de l\'ajout du syllabus:', error);
             toast.error('Erreur lors de l\'ajout du syllabus.');

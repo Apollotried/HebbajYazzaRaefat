@@ -5,6 +5,7 @@ import {applyBatchGrades, fetchStudentsGradeByCoursId} from "../../api/resultApi
 import Pagination from "../pagination/pagination.jsx";
 import {fetchStudentsByCourseId} from "../../api/inscription.js";
 import {toast} from "react-toastify";
+import LogoutButton from "../LogoutButton.jsx";
 
 const GradeHome = () => {
     const [courses, setCourses] = useState([]);
@@ -115,8 +116,7 @@ const GradeHome = () => {
             <div className="hori">
                 <h6 className="title">Gestion des Résultats</h6>
                 <div className="config">
-                    <a href="#"><i className="fas fa-user"></i> admin</a>
-                    <a href="#"><i className="fas fa-sign-out-alt"></i> se déconnecter</a>
+                    <LogoutButton />
                 </div>
             </div>
 

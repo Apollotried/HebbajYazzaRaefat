@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import CourseAssignmentModal from "../../CourseAssignmentModal.jsx";
 import Pagination from "../pagination/pagination.jsx";
+import LogoutButton from "../LogoutButton.jsx";
 
 const StudentList = () => {
     const navigate = useNavigate();
@@ -160,8 +161,7 @@ const StudentList = () => {
             <div className="hori">
                 <h6 className="title">Gestion des Etudiants</h6>
                 <div className="config">
-                    <a><i className="fas fa-user"></i> admin</a>
-                    <a><i className="fas fa-sign-out-alt"></i> se déconnecter</a>
+                    <LogoutButton />
                 </div>
             </div>
 
