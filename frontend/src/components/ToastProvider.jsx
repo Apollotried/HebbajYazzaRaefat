@@ -9,7 +9,6 @@ const ToastProvider = () => {
         <>
             <ToastContainer />
             <ProtectedRoute/>
-            <Outlet />
         </>
     );
 };

@@ -13,9 +13,11 @@ const Header = () => {
             <img src="/logo.png" alt="Logo" />
             <nav className="vert">
                 <ul>
-                    <Link to="/"><li><i className="fas fa-home"></i> Accueil</li></Link>
-                    <Link to="/StudentDetails"><li><i className="far fa-address-card"></i> Student Details</li></Link>
-                    <Link to="/StudentResults"><li><i className="fa fa-list-alt"></i> Results</li></Link>
+                    <Link to="/user/landing"><li><i className="fas fa-home"></i> Accueil</li></Link>
+                    <Link to="/user/CourseListe"><li><i className="fa fa-list-alt"></i> Liste des cours</li></Link>
+                    <Link to="/user/StudentDetails"><li><i className="far fa-address-card"></i> Student Details</li></Link>
+                    <Link to="/user/StudentResults"><li><i className="fa fa-list-alt"></i> Results</li></Link>
+
                 </ul>
             </nav>
         </header>

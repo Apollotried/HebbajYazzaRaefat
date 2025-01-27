@@ -34,14 +34,14 @@ public class ResultController {
 
     //testing the communication
     @GetMapping("/student-info/{studentId}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public ResponseEntity<StudentDto> getStudentInfo(@PathVariable long studentId) {
         StudentDto student = resultService.getStudentById(studentId);
         return ResponseEntity.ok(student);
     }
 
     @GetMapping("/course-info/{courseId}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public ResponseEntity<CourseDto> getCoursetInfo(@PathVariable long courseId) {
         CourseDto course = resultService.getCourseById(courseId);
         return ResponseEntity.ok(course);
@@ -59,14 +59,14 @@ public class ResultController {
     // Get results by student ID
 
     @GetMapping("/student/{studentId}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public ResponseEntity<List<ResultDto>> getResultsByStudent(@PathVariable long studentId) {
         List<ResultDto> results = resultService.getResultByStudent(studentId);
         return ResponseEntity.ok(results);
     }
 
     @GetMapping("/studentKafka/{studentId}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public ResponseEntity<List<ResultDto>> getResultsByStudentKafka(@PathVariable long studentId) {
         // Get all results
         List<ResultDto> allResults = kafkaConsumerService.getResultDtos();
@@ -92,7 +92,7 @@ public class ResultController {
 
     // Get results by course ID
     @GetMapping("/course/{courseId}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public ResponseEntity<List<ResultDto>> getResultsByCourse(@PathVariable long courseId) {
         List<ResultDto> results = resultService.getResultByCourse(courseId);
         return ResponseEntity.ok(results);
@@ -100,7 +100,7 @@ public class ResultController {
 
     //student infos and grade by courseId
     @GetMapping("/course/{courseId}/students-grades")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<ResultDto> getStudentsWithGradesByCourse(@PathVariable long courseId){
         return resultService.getStudentsWithGradesByCourse(courseId);
     }

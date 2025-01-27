@@ -24,13 +24,13 @@ public class StudentController {
 
 
     @GetMapping("/students")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<StudentDtoResponse> getStudents() {
         return studentServiceInter.getAllStudents();
     }
 
     @GetMapping("/students/count")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public long getStudentsCount() {
         return studentServiceInter.getTotalStudentsCount();
     }
@@ -38,7 +38,7 @@ public class StudentController {
 
 
     @GetMapping("/students/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public StudentDtoResponse getStudentById(@PathVariable long id) {
         return studentServiceInter.getStudentById(id);
     }

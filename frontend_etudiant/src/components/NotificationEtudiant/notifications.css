@@ -1,13 +1,10 @@
 /* Styles pour l'icône de notification */
 .notification-icon {
-    position: relative;
     cursor: pointer;
 }
 
 .notification-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
+
     background-color: red;
     color: white;
     border-radius: 50%;
@@ -86,4 +83,9 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.config{
+    display: flex;
+    gap: 1rem;
 }

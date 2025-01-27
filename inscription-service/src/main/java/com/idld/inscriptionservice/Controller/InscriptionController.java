@@ -38,7 +38,7 @@ public class InscriptionController implements ControllerInterface{
 
     @Override
     @GetMapping
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<ResponseInscriptionDTO> getAllInscriptions() {
         return inscriptionService.getAllInscriptions();
     }
@@ -59,7 +59,7 @@ public class InscriptionController implements ControllerInterface{
 
     @Override
     @GetMapping("/CoursesByStudentId/{studentId}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<courseDTO> getCoursesForStudent(@PathVariable Long studentId) {
         // Fetch course IDs for the student
         List<Long> courseIds = inscriptionService.findCourseIdsByStudentId(studentId);
@@ -73,7 +73,7 @@ public class InscriptionController implements ControllerInterface{
 
 
     @GetMapping("/course/{courseId}/students")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public ResponseEntity<List<Student>> getStudentsByCourseId(@PathVariable Long courseId) {
         try {
             List<Student> students = inscriptionService.findStudentsByCourseId(courseId);

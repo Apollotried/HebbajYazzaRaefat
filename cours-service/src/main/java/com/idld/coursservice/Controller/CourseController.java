@@ -24,20 +24,20 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}/details")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public CourseResponseDTO getCourseDetails(@PathVariable long courseId) {
         return courseService.getCourseDetails(courseId);
     }
 
     @GetMapping("/count")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public long getCoursesCount(){
         return courseService.getTotalCoursesCount();
     }
 
 
     @GetMapping
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<CourseResponseDTO> getAllCourses() {
         return courseService.getAllCourses();
     }
@@ -45,7 +45,7 @@ public class CourseController {
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public CourseResponseDTO getCourseById(@PathVariable Long id) {
         return courseService.getCourseById(id);
     }
@@ -82,13 +82,13 @@ public class CourseController {
     }
 
     @GetMapping("/syllabus")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public List<Syllabus> getAllSyllabus(){
         return courseService.getAllSyllabus();
     }
 
     @GetMapping("/syllabus/{syllabusId}")
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
     public Syllabus getSyllabusById(@PathVariable Long syllabusId) {
         return courseService.getSyllabusById(syllabusId);
     }

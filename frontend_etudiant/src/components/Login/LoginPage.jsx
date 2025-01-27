@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css';
-import hero from "../../../public/hero.png";
+import styles from './LoginPage.module.css';
 import { login } from "../../api/loginApi.js";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,19 +29,12 @@ const LoginPage = () => {
                 setUserProfile({ username, role });
                 setIsAuthenticated(true);
 
-                toast.success('Login successful!');
-                if(role === "ADMIN USER"){
-                    navigate('/admin/landing');
-                }else if(role === "USER"){
+                if(role === "USER"){
+                    toast.success('Login successful!');
 
-                    Cookies.set('token', localStorage.getItem('token'), {
-                        domain: 'localhost',
-                        path: '/',
-                        sameSite: 'None',
-                        secure: false
-                    });
-
-                        window.location.href = 'http://localhost:5174/';
+                    navigate('/user/landing');
+                }else{
+                    toast.success('Vous n\'êtes pas dans l\'interface administrateur.');
                 }
 
             } else {
@@ -55,22 +47,15 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="loginContainer">
+        <div className={styles.body}>
+        <div className={styles.loginContainer}>
             <ToastContainer />
-            <section className="right">
-                <h1>
-                    <span>❝</span> Votre Solution pour une <br />
-                    Gestion Académique Simplifiée
-                </h1>
-                <img src={hero} alt="Hero" />
-            </section>
-
-            <section className="left">
-                <div className="wrap">
+            <section className={styles.left}>
+                <div className={styles.wrap}>
                     <form onSubmit={handleLogin}>
                         <h1>Login</h1>
 
-                        <div className="box">
+                        <div className={styles.box}>
                             <input
                                 type="text"
                                 name="username"
@@ -82,7 +67,7 @@ const LoginPage = () => {
                             <i className="bx bxs-user"></i>
                         </div>
 
-                        <div className="box">
+                        <div className={styles.box}>
                             <input
                                 type="password"
                                 name="pwd"
@@ -94,10 +79,11 @@ const LoginPage = () => {
                             <i className="bx bxs-lock-alt"></i>
                         </div>
 
-                        <button type="submit" className="btn">Login</button>
+                        <button type="submit" className={styles.btn}>Login</button>
                     </form>
                 </div>
             </section>
+        </div>
         </div>
     );
 };
