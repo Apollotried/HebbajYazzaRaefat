@@ -13,4 +13,7 @@ public class CourseDto {
     private String title;
     private String description;
     private int credit;
+
+    private Long TeacherId;
+    private Long syllabusId;
 }

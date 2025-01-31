@@ -1,9 +1,6 @@
 package com.idld.resultatservice.controller;
 
-import com.idld.resultatservice.Dtos.CourseDto;
-import com.idld.resultatservice.Dtos.ResultDTORequest;
-import com.idld.resultatservice.Dtos.ResultDto;
-import com.idld.resultatservice.Dtos.StudentDto;
+import com.idld.resultatservice.Dtos.*;
 import com.idld.resultatservice.KafkaGradeConsumer.KafkaConsumerService;
 import com.idld.resultatservice.entities.Result;
 import com.idld.resultatservice.service.ResultServiceInterf;
@@ -105,6 +102,12 @@ public class ResultController {
         return resultService.getStudentsWithGradesByCourse(courseId);
     }
 
+
+    @GetMapping("/details/{studentId}")
+    @PreAuthorize("hasAuthority('SCOPE_USER')")
+    public List<ResultDetails> getResultsDetailsByStudentId(@PathVariable long studentId) {
+            return resultService.getResultDetailsByStudent(studentId);
+    }
 
 
 

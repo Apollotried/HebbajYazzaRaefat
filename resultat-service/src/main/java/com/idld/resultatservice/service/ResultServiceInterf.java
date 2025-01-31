@@ -1,9 +1,6 @@
 package com.idld.resultatservice.service;
 
-import com.idld.resultatservice.Dtos.CourseDto;
-import com.idld.resultatservice.Dtos.ResultDTORequest;
-import com.idld.resultatservice.Dtos.ResultDto;
-import com.idld.resultatservice.Dtos.StudentDto;
+import com.idld.resultatservice.Dtos.*;
 import com.idld.resultatservice.entities.Result;
 import org.springframework.stereotype.Component;
 
@@ -33,4 +30,7 @@ public interface ResultServiceInterf {
     public List<ResultDto> getStudentsWithGradesByCourse(long courseId);
 
     public void applyBatchGrades(List<ResultDTORequest> results);
+
+    public void publishGradeNotification(Result result, String courseName);
+    public List<ResultDetails> getResultDetailsByStudent(long studentId);
 }

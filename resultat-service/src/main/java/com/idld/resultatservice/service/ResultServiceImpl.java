@@ -1,16 +1,15 @@
 package com.idld.resultatservice.service;
-import com.idld.resultatservice.Dtos.CourseDto;
-import com.idld.resultatservice.Dtos.ResultDTORequest;
-import com.idld.resultatservice.Dtos.ResultDto;
-import com.idld.resultatservice.Dtos.StudentDto;
+
+import com.idld.resultatservice.Dtos.*;
 import com.idld.resultatservice.Producer.KafkaProducerService;
 import com.idld.resultatservice.controller.CourseClient;
 import com.idld.resultatservice.controller.StudentClient;
+import com.idld.resultatservice.entities.GradeNotificationEvent;
 import com.idld.resultatservice.entities.Result;
 import com.idld.resultatservice.exceptions.EntityNotFoundException;
 import com.idld.resultatservice.mapper.ResultMapperInterf;
 import com.idld.resultatservice.repository.ResultRepository;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ResultServiceImpl implements ResultServiceInterf{
 
     ResultRepository resultRepository;
@@ -55,9 +55,19 @@ public class ResultServiceImpl implements ResultServiceInterf{
         Result savedResult = resultRepository.save(result);
 
         // Publish the result to Kafka
-        String message = String.format("New Result: Student ID: %d, Course ID: %d, Grade: %.2f",
-                savedResult.getStudentId(), savedResult.getCourseId(), savedResult.getGrade());
-        kafkaProducerService.sendMessage(message);
+        // String message = String.format("New Result: Student ID: %d, Course ID: %d, Grade: %.2f",
+           //     savedResult.getStudentId(), savedResult.getCourseId(), savedResult.getGrade());
+        //kafkaProducerService.sendMessage(message);
+        String courseName = courseClient.getCourseById(savedResult.getCourseId()).getTitle();
+
+
+        GradeNotificationEvent gradeEvent = new GradeNotificationEvent();
+        gradeEvent.setUserId(savedResult.getStudentId());
+        gradeEvent.setCourseId(savedResult.getCourseId());
+        gradeEvent.setGrade(savedResult.getGrade());
+        gradeEvent.setCourseName(courseName);
+
+        kafkaProducerService.sendMessage(gradeEvent);
 
         return savedResult;
     }
@@ -124,9 +134,26 @@ public class ResultServiceImpl implements ResultServiceInterf{
         List<Result> results = resultRepository.findByCourseId(courseId);
         return results.stream().map(result ->{
             StudentDto student = studentClient.getStudentById(result.getStudentId());
-            return new ResultDto(result.getStudentId(), result.getCourseId(), result.getGrade(), student);
+            return new ResultDto(result.getStudentId(), result.getCourseId(), result.getGrade(),  student);
         }).collect(Collectors.toList());
     }
+
+
+    @Override
+    public List<ResultDetails> getResultDetailsByStudent(long studentId) {
+        List<Result> results = resultRepository.findByStudentId(studentId);
+        if (results.isEmpty()) {
+            throw new RuntimeException("No results found for studentId: " + studentId);
+        }
+
+
+        return results.stream().map(result -> {
+            StudentDto student = studentClient.getStudentById(studentId); // Fetch student details
+
+            return new ResultDetails(result.getStudentId(), result.getCourseId(), result.getGrade(), null, student); // Include full course & student
+        }).collect(Collectors.toList());
+    }
+
 
 
     @Override
@@ -148,16 +175,39 @@ public class ResultServiceImpl implements ResultServiceInterf{
             if (existingResult != null) {
                 // If the result already exists, update the grade
                 existingResult.setGrade(resultDto.getGrade());
+                publishGradeNotification(existingResult, course.getTitle());
                 return existingResult;
             } else {
                 // If it does not exist, create a new result entity
-                return resultMapperInterf.resultDtoToResult(resultDto);
+                Result newResult = resultMapperInterf.resultDtoToResult(resultDto);
+                publishGradeNotification(newResult, course.getTitle());
+                return newResult;
             }
         }).collect(Collectors.toList());
 
         // Save all results in a batch
         resultRepository.saveAll(resultEntities);
     }
+
+
+    @Override
+    public void publishGradeNotification(Result result, String courseName) {
+        try {
+            GradeNotificationEvent gradeEvent = new GradeNotificationEvent();
+            gradeEvent.setUserId(result.getStudentId());
+            gradeEvent.setCourseId(result.getCourseId());
+            gradeEvent.setGrade(result.getGrade());
+            gradeEvent.setCourseName(courseName);
+
+            kafkaProducerService.sendMessage(gradeEvent);
+
+            log.info("Successfully published grade notification for studentId: {}, course: {}", result.getStudentId(), courseName);
+        } catch (Exception e) {
+            log.error("Error while publishing grade notification", e);
+        }
+    }
+
+
 
 
 
