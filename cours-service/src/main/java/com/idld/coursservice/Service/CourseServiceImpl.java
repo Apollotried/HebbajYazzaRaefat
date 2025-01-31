@@ -24,12 +24,14 @@ public class CourseServiceImpl implements CourseService {
     private final CourseMapperInter courseMapper;
     private final TeacherClient teacherClient;
     private final SyllabusRepository syllabusRepository;
+    private final KafkaProducerService kafkaProducerService;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CourseMapperInter courseMapper, TeacherClient teacherClient, SyllabusRepository syllabusRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, CourseMapperInter courseMapper, TeacherClient teacherClient, SyllabusRepository syllabusRepository, KafkaProducerService kafkaProducerService) {
         this.courseRepository = courseRepository;
         this.courseMapper = courseMapper;
         this.teacherClient = teacherClient;
         this.syllabusRepository = syllabusRepository;
+        this.kafkaProducerService = kafkaProducerService;
     }
 
     @Override
@@ -54,6 +56,10 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponseDTO createCourse(CourseRequestDTO courseRequestDTO) {
         Course course = courseMapper.toCourse(courseRequestDTO);
         Course savedCourse = courseRepository.save(course);
+
+        String message = "Course " + savedCourse.getTitle() + " (ID: " + savedCourse.getId() + ") has been created.";
+        kafkaProducerService.sendMessage("course-notifications", message);
+
         return courseMapper.toCourseDTO(savedCourse);
     }
 
@@ -68,8 +74,8 @@ public class CourseServiceImpl implements CourseService {
         existingCourse.setCredit(courseRequestDTO.getCredit());
         existingCourse.setTeacherId(courseRequestDTO.getTeacherId());
 
-        // Save the updated course entity
         courseRepository.save(existingCourse);
+
     }
 
 

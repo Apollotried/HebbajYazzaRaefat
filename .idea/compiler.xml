@@ -8,7 +8,26 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Annotation profile for prof-service" enabled="true">
+      <profile name="Annotation profile for notification-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="notification-service" />
+      </profile>
+      <profile name="Annotation profile for common-dto" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="common-dto" />
+      </profile>
+      <profile name="Annotation profile for cours-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -16,7 +35,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="cours-service" />
-        <module name="resultat-service" />
         <module name="config-service" />
         <module name="prof-service" />
         <module name="gateway-service" />
@@ -24,6 +42,16 @@
         <module name="communication-service" />
         <module name="inscription-service" />
         <module name="discovery-service" />
+      </profile>
+      <profile name="Annotation profile for resultat-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="resultat-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -33,6 +61,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="common-dto" options="-parameters" />
       <module name="communication-service" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="cours-service" options="-parameters" />
@@ -40,6 +69,7 @@
       <module name="etudiant-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="inscription-service" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
       <module name="prof-service" options="-parameters" />
       <module name="resultat-service" options="-parameters" />
       <module name="security" options="-parameters" />

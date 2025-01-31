@@ -1,6 +1,7 @@
 // App.jsx
 
 import { useState } from 'react';
+import './global.js'
 import './App.css';
 import './index.css';
 import Landing from './Landing.jsx';
@@ -15,9 +16,13 @@ import LoginPage from "./components/Login/LoginPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import CourseListeManagement from "./CourseListeManagement.jsx";
 import ViewSyllabus from "./components/coursList/viewSyllabus.jsx";
+import WebSocketComponent from "./components/NotificationComponent.jsx";
+import Grades from "./components/resultats/Grades.jsx";
+
 
 function App() {
     return (
+
         <AuthProvider>
                 <Router>
                     <div>
@@ -30,6 +35,7 @@ function App() {
                                 <Route path="StudentResults" element={<StudentResults />} />
                                 <Route path="CourseListe" element={<CourseListeManagement />} />
                                 <Route path="view-syllabus" element={<ViewSyllabus />} />
+                                <Route path="grades" element={<Grades />} />
 
                             </Route>
 

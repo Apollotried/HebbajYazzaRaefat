@@ -157,7 +157,7 @@ const CourseList = () => {
     };
 
     const handleEditClick = (id) => {
-        navigate(`/edit-course/${id}`, { replace: true });
+        navigate(`/admin/edit-course/${id}`, { replace: true });
         closeModal();
     };
 

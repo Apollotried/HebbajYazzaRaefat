@@ -41,7 +41,7 @@ const EditCourse = () => {
         try {
             await updateCourse(id, formData);
             toast.success('Cours mis à jour avec succès!');
-            navigate(`/courses`, { replace: true });
+            navigate(`/admin/courses`, { replace: true });
         } catch (error) {
             console.error('Error updating course:', error);
             toast.error('Erreur lors de la mise à jour du cours.');

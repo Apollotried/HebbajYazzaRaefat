@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Main.css';
 import { fetchStudentById, fetchStudentCount } from '../../api/studentApi';
-import NotificationsEtudiant from "../NotificationEtudiant/Notifications.jsx";
+
 import Cookies from 'js-cookie';
-import LogoutButton from "../LogoutButton.jsx";  // Import js-cookie to work with cookies
+import LogoutButton from "../LogoutButton.jsx";
+import NotificationComponent from "../NotificationComponent.jsx";  // Import js-cookie to work with cookies
 
 const Main = () => {
     const [student, setStudent] = useState(null);
@@ -36,10 +37,8 @@ const Main = () => {
             <div className="hori">
                 <h6 className="title">Page d'accueil</h6>
                 <div className="config">
-                    <div className="config">
                         <LogoutButton />
-                        <NotificationsEtudiant />
-                    </div>
+                       <NotificationComponent />
 
                 </div>
             </div>

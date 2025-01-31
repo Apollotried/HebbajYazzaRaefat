@@ -15,6 +15,8 @@ const Header = () => {
                 <ul>
                     <Link to="/user/landing"><li><i className="fas fa-home"></i> Accueil</li></Link>
                     <Link to="/user/CourseListe"><li><i className="fa fa-list-alt"></i> Liste des cours</li></Link>
+                    <li><i className="fa fa-list-alt"></i> liste de resultats</li>
+
                     <Link to="/user/StudentDetails"><li><i className="far fa-address-card"></i> Student Details</li></Link>
                     <Link to="/user/StudentResults"><li><i className="fa fa-list-alt"></i> Results</li></Link>
 
