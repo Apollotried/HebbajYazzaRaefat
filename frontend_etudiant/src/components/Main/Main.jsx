@@ -51,10 +51,6 @@ const Main = () => {
                     Naviguez facilement en utilisant les liens ci-dessous :
                 </div>
 
-                <div className="link-cards">
-                    <a href="/StudentResults" className="link-card">Résultats</a>
-                    <a href="/StudentDetails" className="link-card">Détails de l'Étudiant</a>
-                </div>
             </div>
         </main>
     );

@@ -1,21 +1,16 @@
-package com.idld.inscriptionservice;
+package com.idld.inscriptionservice.Service;
 
-import com.idld.inscriptionservice.Service.StudentFeignClient;
-import com.idld.inscriptionservice.Service.CourseFeignClient;
-import com.idld.inscriptionservice.Service.*;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
+import static org.junit.jupiter.api.Assertions.*;
 import com.idld.inscriptionservice.DTOs.*;
 import com.idld.inscriptionservice.Entity.Inscription;
 import com.idld.inscriptionservice.Mapper.InscriptionMapperInterface;
 import com.idld.inscriptionservice.repository.InscriptionRepository;
-import com.idld.inscriptionservice.Model.Course;
 import com.idld.inscriptionservice.Model.Student;
-
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -23,9 +18,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@SpringBootTest
-class InscriptionServiceApplicationTests {
+@ExtendWith(MockitoExtension.class)
+class InscriptionServiceImplTest {
 
     @Mock
     private InscriptionRepository inscriptionRepository;
@@ -70,8 +64,6 @@ class InscriptionServiceApplicationTests {
     }
 
 
-
-
     @Test
     public void testAssignCoursesToStudent_ShouldAssignCourses() {
         AssignCoursesRequestDTO requestDto = new AssignCoursesRequestDTO();
@@ -102,7 +94,7 @@ class InscriptionServiceApplicationTests {
     public void testGetCoursesForStudent_ShouldReturnCourses() {
         Long studentId = 1L;
         List<Long> courseIds = List.of(1L, 2L);
-        List<Course> courses = List.of(new Course(), new Course());
+        List<courseDTO> courses = List.of(new courseDTO(), new courseDTO());
 
         when(inscriptionRepository.findCourseIdsByStudentId(studentId)).thenReturn(courseIds);
         when(courseFeignClient.getCourseById(anyLong())).thenReturn(new courseDTO());
@@ -113,6 +105,4 @@ class InscriptionServiceApplicationTests {
         verify(inscriptionRepository, times(1)).findCourseIdsByStudentId(studentId);
         verify(courseFeignClient, times(courseIds.size())).getCourseById(anyLong());
     }
-
-
 }

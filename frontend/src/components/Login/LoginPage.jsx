@@ -33,16 +33,6 @@ const LoginPage = () => {
                 toast.success('Login successful!');
                 if(role === "ADMIN USER"){
                     navigate('/admin/landing');
-                }else if(role === "USER"){
-
-                    Cookies.set('token', localStorage.getItem('token'), {
-                        domain: 'localhost',
-                        path: '/',
-                        sameSite: 'None',
-                        secure: false
-                    });
-
-                        window.location.href = 'http://localhost:5174/';
                 }
 
             } else {

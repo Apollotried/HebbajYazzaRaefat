@@ -9,7 +9,7 @@ const NotificationList = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get("http://localhost:7081/api/notificationsEmail/all");
+        const response = await axios.get("http://localhost:8099/api/notificationsEmail/all");
         setNotifications(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des notifications :", error);
@@ -22,7 +22,7 @@ const NotificationList = () => {
 
   return (
     <div className="notification-list">
-      <h2>Liste des Notifications</h2>
+      <h2>Liste des Emails</h2>
       {notifications.length > 0 ? (
         <ul className="ul">
           {notifications.map((notification) => (

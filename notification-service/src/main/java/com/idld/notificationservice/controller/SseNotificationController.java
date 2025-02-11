@@ -19,23 +19,23 @@ public class SseNotificationController {
 
     private final List<SseEmitter> globalEmitters = new ArrayList<>();
 
-    // Store emitters for user-specific notifications
+
     private final Map<Long, SseEmitter> userEmitters = new ConcurrentHashMap<>();
 
-    // Endpoint for clients to subscribe to global notifications
+
     @GetMapping(value = "/global", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter subscribeToGlobalNotifications() {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE); // No timeout
         globalEmitters.add(emitter);
 
-        // Remove the emitter when the client disconnects
+
         emitter.onCompletion(() -> globalEmitters.remove(emitter));
         emitter.onTimeout(() -> globalEmitters.remove(emitter));
 
         return emitter;
     }
 
-    // Endpoint for clients to subscribe to user-specific notifications
+
     @GetMapping(value = "/user/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter subscribeToUserNotifications(@PathVariable Long userId) {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE); // No timeout
@@ -48,7 +48,7 @@ public class SseNotificationController {
         return emitter;
     }
 
-    // Method to send global notifications to all connected clients
+
     public void sendGlobalNotification(String message) {
         List<SseEmitter> deadEmitters = new ArrayList<>();
         globalEmitters.forEach(emitter -> {
@@ -59,11 +59,11 @@ public class SseNotificationController {
             }
         });
 
-        // Remove dead emitters
+
         globalEmitters.removeAll(deadEmitters);
     }
 
-    // Method to send notifications to a specific user
+
     public void sendUserNotification(Long userId, String message) {
         SseEmitter emitter = userEmitters.get(userId);
         if (emitter != null) {

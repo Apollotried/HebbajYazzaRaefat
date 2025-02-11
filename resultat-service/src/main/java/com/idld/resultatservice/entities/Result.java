@@ -26,4 +26,10 @@ public class Result {
 
     @Transient
     private CourseDto course;
+
+    public Result(long studentId, long courseId, double grade) {
+        this.studentId = studentId;
+        this.courseId = courseId;
+        this.grade = grade;
+    }
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {fetchCourseInfo, fetchResultDetailsByStudentId, fetchResultsByStudent} from "../../api/resultApi.js";
 
 const StudentResults = ({ studentId = 1 }) => {
     const [results, setResults] = useState([]);
@@ -12,11 +13,16 @@ const StudentResults = ({ studentId = 1 }) => {
     const fetchStudentResults = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`http://localhost:8082/api/results/student/${studentId}`);
-            const resultsData = response.data;
-            setResults(resultsData);
+            const response = await fetchResultsByStudent(studentId);
+            if (!response || response.length === 0) {
+                setResults([]);
+                return;
+            }
 
-            const courseIds = [...new Set(resultsData.map((result) => result.courseId))];
+            setResults(response);
+
+
+            const courseIds = [...new Set(response.map((result) => result.courseId))];
             const courseDetails = await fetchCourseDetails(courseIds);
             setCourses(courseDetails);
         } catch (err) {
@@ -30,8 +36,11 @@ const StudentResults = ({ studentId = 1 }) => {
         const courseDetails = {};
         try {
             for (const id of courseIds) {
-                const response = await axios.get(`http://localhost:8082/api/results/course-info/${id}`);
-                courseDetails[id] = response.data.title;
+                const response = await fetchCourseInfo(id);
+                if(response && response.title){
+                    courseDetails[id] = response.title;
+                }
+
             }
         } catch (err) {
             console.error('Erreur lors de la récupération des cours:', err);

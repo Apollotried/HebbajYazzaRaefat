@@ -22,7 +22,10 @@ class StudentMapperImplTest {
                 "test",
                 LocalDate.of(1995, 10, 25));
 
+
         Student student = studentMapper.ToStudent(dto);
+
+
         assertNotNull(student);
         assertEquals("John", student.getFirstName());
         assertEquals("Doe", student.getLastName());

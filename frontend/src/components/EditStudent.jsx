@@ -44,7 +44,7 @@ const EditStudent = () => {
         try {
             await updateStudent(id, formData);
             toast.success('Étudiant mis à jour avec succès!');
-            navigate(`/students`, { replace: true });
+            navigate(`/admin/students`, { replace: true });
         } catch (error) {
             console.error('Error updating student:', error);
             toast.error('Erreur lors de la mise à jour de l\'étudiant.');

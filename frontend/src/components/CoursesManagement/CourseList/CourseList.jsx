@@ -61,6 +61,15 @@ const CourseList = () => {
     };
     const [formData, setFormData] = useState(initialCourseForm);
 
+    const getSyllabi = async () => {
+        try {
+            const fetchedSyllabi = await fetchSyllabus();
+            setSyllabi(fetchedSyllabi.filter(syllabus => !syllabus.assigned)); // Keep only unassigned syllabi
+        } catch (error) {
+            console.error("Error fetching syllabi:", error);
+        }
+    };
+
     useEffect(() => {
         const getCourses = async () => {
             try {
@@ -69,15 +78,6 @@ const CourseList = () => {
                 console.log("Fetched Courses:", fetchedCourses);
             } catch (error) {
                 console.error("Error fetching Courses:", error);
-            }
-        };
-
-        const getSyllabi = async () => {
-            try {
-                const fetchedSyllabi = await fetchSyllabus();
-                setSyllabi(fetchedSyllabi);
-            } catch (error) {
-                console.error("Error fetching syllabi:", error);
             }
         };
 
@@ -181,6 +181,8 @@ const CourseList = () => {
 
             const updatedCourses = await fetchCourses();
             setCourses(updatedCourses);
+
+            await getSyllabi();
 
             closeAssignSyllabusModal();
         } catch (error) {

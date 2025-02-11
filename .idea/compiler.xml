@@ -17,16 +17,6 @@
         </processorPath>
         <module name="notification-service" />
       </profile>
-      <profile name="Annotation profile for common-dto" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-        </processorPath>
-        <module name="common-dto" />
-      </profile>
       <profile name="Annotation profile for cours-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -55,6 +45,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="common-dto" target="23" />
       <module name="security" target="23" />
       <module name="testModule" target="23" />
     </bytecodeTargetLevel>

@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import { fetchStudentById } from "../../api/studentApi.js";
 
 const StudentDetails = ({ studentId = 1 }) => {
-    const [student, setStudent] = useState(null);
+    const [student, setStudent] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const fetchStudentDetails = async () => {
         try {
-            console.log('Fetching student details for ID:', studentId); // Debug: afficher l'ID de l'étudiant
+            console.log('Fetching student details for ID:', studentId);
             setLoading(true);
-            // Utilisez studentId ici pour la requête dynamique
-            const response = await axios.get(`http://localhost:8080/api/students/${studentId}`);
-            console.log('Response data:', response.data); // Debug: vérifier la réponse
-            // Vérifiez si la réponse contient les données attendues
-            if (response.data && response.data.id) {
-                setStudent(response.data); // Assigner les données de l'étudiant à l'état
+
+            const response = await fetchStudentById(studentId);
+            console.log('Response data:', response.data);
+
+            if (response) {
+                setStudent(response);
             } else {
                 setError('Aucune donnée trouvée.');
             }
@@ -29,7 +30,7 @@ const StudentDetails = ({ studentId = 1 }) => {
 
     useEffect(() => {
         fetchStudentDetails();
-    }, [studentId]);
+    }, []);
 
     const containerStyle = {
         maxWidth: '800px',

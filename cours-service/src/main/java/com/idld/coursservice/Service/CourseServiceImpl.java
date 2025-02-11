@@ -81,11 +81,23 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseResponseDTO deleteCourse(Long id) {
-        Course course = courseRepository.findById(id).get();
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Course not found with id: " + id));
+
+        // Convert to DTO before modifying the entity
         CourseResponseDTO courseResponseDTO = courseMapper.toCourseDTO(course);
+
+        if (course.getSyllabus() != null) {
+            Syllabus syllabus = course.getSyllabus();
+            course.setSyllabus(null);
+            courseRepository.save(course);
+            syllabusRepository.delete(syllabus);
+        }
+
         courseRepository.delete(course);
         return courseResponseDTO;
     }
+
 
     @Override
     public CourseResponseDTO getCourseDetails(long courseId) {
@@ -109,6 +121,7 @@ public class CourseServiceImpl implements CourseService {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
         Optional<Syllabus> optionalSyllabus = syllabusRepository.findById(syllabusId);
 
+
         if (optionalCourse.isPresent() && optionalSyllabus.isPresent()) {
             Course course = optionalCourse.get();
             Syllabus syllabus = optionalSyllabus.get();
@@ -116,6 +129,7 @@ public class CourseServiceImpl implements CourseService {
             // Check for null to be extra cautious
             if (course != null && syllabus != null) {
                 course.setSyllabus(syllabus);
+                syllabus.setAssigned(true);
                 return courseRepository.save(course);
             } else {
                 throw new ResourceNotFoundException("Course or Syllabus not found");
@@ -128,6 +142,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Syllabus createSyllabus(Syllabus syllabus) {
+        syllabus.setAssigned(false);
         return syllabusRepository.save(syllabus);
     }
 

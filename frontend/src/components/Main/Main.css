@@ -93,6 +93,7 @@ main h1 {
     background-color: #f0f4f8; /* Light background for better contrast */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .welcome-header {

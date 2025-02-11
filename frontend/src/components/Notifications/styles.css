@@ -1,6 +1,6 @@
-/* Container for the Send Notification page */
+
 .send-notification {
-    max-width: 600px;
+    width: 600px;
     margin: 40px auto;
     padding: 30px;
     background-color: #fff;

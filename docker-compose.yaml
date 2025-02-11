@@ -200,17 +200,6 @@ services:
     networks:
       - app-network
 
-  communication-service:
-    build: ./communication-service
-    container_name: communication-dock
-    ports:
-      - '7081:7081'
-    expose:
-      - '7081'
-    environment:
-      - DISCOVERY_SERVICE_URL=http://discovery-dock:8761/eureka
-    networks:
-      - app-network
 
   notification-service:
     build: ./notification-service
@@ -232,9 +221,9 @@ services:
     networks:
       - app-network
 
-
-
-
+    depends_on:
+      config-service:
+        condition: service_healthy
 
 
   gateway-service:

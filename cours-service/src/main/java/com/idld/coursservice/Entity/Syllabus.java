@@ -48,4 +48,6 @@ public class Syllabus {
     private Map<Integer, String> exams;
 
     private String gradingPolicy;
+
+    private boolean assigned;
 }

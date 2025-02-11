@@ -20,10 +20,12 @@ const GradeHome = () => {
     const studentPerPage = 6;
 
     // Filter and Pagination logic
-    const filteredStudents = students.filter(
-        item => item.firstName.toLowerCase().includes(search.toLowerCase()) ||
+    const filteredStudents = students
+        .filter(item => item && item.firstName && item.lastName && (
+            item.firstName.toLowerCase().includes(search.toLowerCase()) ||
             item.lastName.toLowerCase().includes(search.toLowerCase())
-    );
+        ));
+
 
     const sortedStudents = filteredStudents.sort((a, b) => {
         if (sortOrder === 'nameAsc') {
@@ -58,7 +60,7 @@ const GradeHome = () => {
         setSelectedCourse(courseId);
         try {
             const response = await fetchStudentsByCourseId(courseId);
-            setStudents(response);
+            setStudents(response || []);
             console.log("Fetched Students:", response);
         } catch (error) {
             console.error("Error fetching Students:", error);

@@ -11,7 +11,7 @@ const SendNotification = () => {
   const handleSend = async () => {
     try {
       const notification = { recipient, object: subject, message };
-      await axios.post("http://localhost:7081/api/notificationsEmail/send", notification);
+      await axios.post("http://localhost:8099/api/notificationsEmail/send", notification);
       toast.success("Notification envoyée avec succès !");
     } catch (error) {
       console.error("Erreur lors de l'envoi de la notification :", error);
@@ -21,7 +21,7 @@ const SendNotification = () => {
 
   return (
     <div className="send-notification">
-      <h2>Envoyer une Notification</h2>
+      <h2>Envoyer un Email</h2>
       <form onSubmit={(e) => e.preventDefault()}>
         <div>
           <label>Destinataire :</label>

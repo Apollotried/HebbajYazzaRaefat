@@ -7,7 +7,6 @@ const StudentDetails = () => {
     return (
             <div className="container">
                 <Header/>
-                <NotificationsEtudiant />
                 <Details/>
             </div>
     )

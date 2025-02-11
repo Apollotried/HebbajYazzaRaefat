@@ -21,9 +21,8 @@ const Header = () => {
                         <li><i className="fas fa-graduation-cap"></i> Gestion des Résultats</li>
                     </Link>
 
-                    <Link to="/admin/send-notification"><li><i className="fas fa-envelope"></i> Envoyer Notification</li></Link>
-                    <Link to="/admin/notifications"><li><i className="fas fa-bell"></i> Liste des Notifications</li></Link>
-                    <Link to="/admin/kafka-notifications"><li><i className="fas fa-exchange-alt"></i> Kafka Notifications</li></Link>
+                    <Link to="/admin/send-notification"><li><i className="fas fa-envelope"></i> Envoyer un Email</li></Link>
+                    <Link to="/admin/notifications"><li><i className="fas fa-bell"></i> Liste des Emails</li></Link>
                 </ul>
             </nav>
         </header>

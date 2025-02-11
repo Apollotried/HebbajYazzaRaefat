@@ -4,10 +4,13 @@ import { getCoursesByStudentId, AssignCoursesToStudent } from './api/inscription
 import {fetchCourses} from './api/coursApi.js';
 import { toast } from 'react-toastify';
 import './CourseAssignmentModal.css';
+import Pagination from "./components/pagination/pagination.jsx";
 
 const CourseAssignmentModal = ({ isOpen, onRequestClose, studentId }) => {
     const [courses, setCourses] = useState([]);
     const [selectedCourses, setSelectedCourses] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const CoursePerPage = 5;
 
     useEffect(() => {
         if (isOpen && studentId) {
@@ -46,11 +49,17 @@ const CourseAssignmentModal = ({ isOpen, onRequestClose, studentId }) => {
         }
     };
 
+    const indexOfLastCourse = currentPage * CoursePerPage;
+    const indexOfFirstCourse = indexOfLastCourse - CoursePerPage;
+    const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+
+    const totalPages = Math.ceil(courses.length / CoursePerPage);
+
     return (
         <Modal isOpen={isOpen} onRequestClose={onRequestClose} contentLabel="Affecter des Cours" className="ModalAssign" overlayClassName="Overlay">
             <h2>Affecter des Cours</h2>
             <form onSubmit={handleSubmit}>
-                {courses.map(course => (
+                {currentCourses.map(course => (
                     <div key={course.id} className="form-group">
                         <div className="label">
                             <input
@@ -67,6 +76,11 @@ const CourseAssignmentModal = ({ isOpen, onRequestClose, studentId }) => {
                 ))}
                 <button type="submit" className="submit-button">Affecter les cours</button>
             </form>
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+            />
         </Modal>
     );
 };

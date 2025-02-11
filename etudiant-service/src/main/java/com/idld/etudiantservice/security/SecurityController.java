@@ -27,14 +27,10 @@ public class SecurityController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtEncoder jwtEncoder;
 
-
-    @GetMapping("/profile")
-    public Authentication authentication(Authentication authentication) {
-        return authentication;
-    }
 
 
     @PostMapping("/login")

@@ -7,7 +7,7 @@ const StudentResults = () => {
     return (
             <div className="container">
                 <Header/>
-                <NotificationsEtudiant />
+
                 <Result/>
             </div>
     )

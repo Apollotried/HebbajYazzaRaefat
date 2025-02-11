@@ -17,7 +17,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
-    // ConsumerFactory for JSON messages (e.g., GradeNotificationEvent)
+
     @Bean
     public ConsumerFactory<String, GradeNotificationEvent> gradeConsumerFactory() {
         Map<String, Object> props = new HashMap<>();
@@ -39,7 +39,7 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), deserializer);
     }
 
-    // KafkaListenerContainerFactory for JSON messages
+
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, GradeNotificationEvent> gradeKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, GradeNotificationEvent> factory =

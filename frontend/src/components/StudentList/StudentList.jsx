@@ -129,7 +129,7 @@ const StudentList = () => {
     };
 
     const handleEditClick = (id) => {
-        navigate(`/edit-student/${id}`, { replace: true });
+        navigate(`/admin/edit-student/${id}`, { replace: true });
         closeModal();
     };
 

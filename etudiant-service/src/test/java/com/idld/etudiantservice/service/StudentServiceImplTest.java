@@ -24,8 +24,10 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplTest {
+
     @Mock
     private StudentRepository studentRepository;
+
     @Mock
     private StudentMapperInter studentMapperInter;
 
